@@ -1,0 +1,17 @@
+option java_package = "com.dsky.netty.pvpser.protocode";
+option java_outer_classname = "PVPSerProtocol";
+option optimize_for = LITE_RUNTIME;
+
+message SocketRequest {
+  required int32 number = 1;
+  required int32 sequence = 2;
+  optional int32 reserve = 3;
+  optional string requestMsg = 4;
+}
+
+message SocketResponse {
+  required int32 number = 1;
+  required int32 sequence = 2;
+  optional int32 reserve = 3;
+  optional string responseMsg = 4;
+}
