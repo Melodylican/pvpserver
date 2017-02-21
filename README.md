@@ -1,28 +1,23 @@
-lightning4j
+PVPServer
 ===========
 
 ## 更新日志
-### 2015/9/30更新内容
-* 加入dbcp2数据库连接池
+
 * 增加工作线程状态监控
 
-### 2015/8/14更新内容
+###
 * 模块热更新存在严重bug暂时取消
 * netty升级到5.0
 * 增加mysql数据库操作类
 * 增加了http请求方法
-* 修复部分bug及统一异常捕捉日志
-* 开源了本人基于lightning4j开发的html5游戏《无尽战争》的服务端作为示例
 
-### 2015/2/13更新内容
-* 增加模块加载工具，实现游戏业务模块热更新
 
 ## 简介
 一个基于Netty网络库的java服务端轻量级开发框架，用于快速开发手游，页游等服务端程序，使用WebSocket通信协议，支持mysql，redis，连接池，全局定时任务，心跳检测，可配置逻辑处理线程等，使用简单，部署方便。
 <br><br>**项目网站：**http://www.53hql.com/lightning4j
 <br>**项目WiKi：**http://www.53hql.com/lightning4j/wiki
 
-## 使用（基于IntelliJ IDEA）
+## 使用（基于MyEclipse）
 新建一个maven project或在已有project中新建一个maven module，编辑pom.xml中的依赖包：
 
     <dependencies>
