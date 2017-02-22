@@ -22,6 +22,8 @@ import java.util.Map;
  * @版本：V1.0
  */
 public class Room implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	//房间号
 	private String roomId;
 	//房间创建时间

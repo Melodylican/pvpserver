@@ -1,0 +1,14 @@
+<configuration>  
+    <settings>  
+      <setting name="lazyLoadingEnabled" value="false" />  
+    </settings>  
+      
+    <typeHandlers>  
+      <typeHandler handler="com.dsky.netty.pvpser.maptypehandler.MapTypeHandler" javaType="java.util.Map" jdbcType="VARCHAR" />  
+    </typeHandlers>    
+      
+    <mappers>  
+    	<mapper resource="com/dsky/netty/pvpser/maptypehandler/room.xml" />  
+    </mappers>  
+      
+</configuration> 

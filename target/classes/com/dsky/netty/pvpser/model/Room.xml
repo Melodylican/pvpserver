@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dsky.netty.pvpser.model">
+    <resultMap id="resultListRoom" type="com.dsky.netty.pvpser.model.Room">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="roomId" property="roomId" jdbcType="INTEGER"/>
+        <result column="roomCreateTime" property="roomCreateTime" jdbcType="INTEGER"/>
+        <result column="roomDelTime" property="roomDelTime" jdbcType="INTEGER"/>
+        <result column="roomOwner" property="roomOwner" jdbcType="VARCHAR"/>
+        <result column="numbers" property="numbers" jdbcType="INTEGER"/>
+        <result column="currentNumber" property="currentNumber" jdbcType="INTEGER"/>
+        <result column="roomStatus" property="roomStatus" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="member" property="member"  javaType="java.util.Map" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectRoomByRoomId" parameterType="int" resultType="Room">
+        select * from `room` where roomId = #{roomId}
+    </select>
+
+    <select id="selectUsers" parameterType="string" resultMap="resultListUser">
+        select * from users where name like #{userName}
+    </select>
+<!-- 
+    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="userId" parameterType="com.hql.test.dao.Users">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        insert into users(id, name) values(#{id}, #{name})
+    </insert>
+ -->
+    <update id="updateRoom" parameterType="Room">
+        update room set members=#{members,jdbcType=VARCHAR, javajavaType=java.util.Map} where roomId=#{roomId}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+         update room set roomDelTime=#{roomDelTime} where roomId=#{roomId}
+    </delete>
+</mapper>

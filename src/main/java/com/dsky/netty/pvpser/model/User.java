@@ -8,6 +8,8 @@
  */
 package com.dsky.netty.pvpser.model;
 
+import java.io.Serializable;
+
 /**
  * @类功能说明：记录房间中用户的信息
  * @类修改者：
@@ -18,7 +20,9 @@ package com.dsky.netty.pvpser.model;
  * @创建时间：2017年2月21日 下午3:00:28
  * @版本：V1.0
  */
-public class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	//用户Id
 	private String userId;
 	//用户当前状态
