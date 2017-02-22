@@ -11,6 +11,7 @@ package com.dsky.netty.serverTest;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.dsky.netty.pvpser.common.ProtocolCode;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse;
 
@@ -28,61 +29,59 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @创建时间：2017年2月20日 下午3:30:34
  * @版本：V1.0
  */
-public class PVPClientHandler extends SimpleChannelInboundHandler<SocketResponse> { 
+public class PVPClientHandler extends
+		SimpleChannelInboundHandler<SocketResponse> {
 
-	  private Channel channel;
-	  private SocketResponse resp;
-	  BlockingQueue<SocketResponse> resps = new LinkedBlockingQueue<SocketResponse>();
-	  public SocketResponse sendRequest() {
-		  /*
-		  GateServerProtocol.GateRequest.Builder reqs = GateServerProtocol.GateRequest.newBuilder();
-		  reqs.setRequestMsg("");
-			*/
-		  SocketRequest req = SocketRequest.newBuilder()
-			                        .setRequestMsg("From Client").build();
+	private Channel channel;
+	private SocketResponse resp;
+	BlockingQueue<SocketResponse> resps = new LinkedBlockingQueue<SocketResponse>();
 
-			
-		  // Send request
-		  channel.writeAndFlush(req);
-		  System.out.println(req.getRequestMsg()+ " ...");
-		  // Now wait for response from server
-		  boolean interrupted = false;
-		  for (;;) {
-			    try {
-			        resp = resps.take();
-			        break;
-			    } catch (InterruptedException ignore) {
-			        interrupted = true;
-			    }
-		  }
-			
-		  if (interrupted) {
-			    Thread.currentThread().interrupt();
-		  }
-			
-		  return resp;
-	  }
+	public SocketResponse sendRequest() {
+		/*
+		 * GateServerProtocol.GateRequest.Builder reqs =
+		 * GateServerProtocol.GateRequest.newBuilder(); reqs.setRequestMsg("");
+		 */
+		SocketRequest.Builder req = SocketRequest.newBuilder();
+		req.setNumber(ProtocolCode.ROOM_FAILURE);
+		req.setRequestMsg("{\"roomId\":1,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\"}");
 
-	  @Override
-	  public void channelRegistered(ChannelHandlerContext ctx) {
-	      channel = ctx.channel();
-	  }
-	  
+		// Send request
+		channel.writeAndFlush(req);
+		System.out.println(req.getRequestMsg() + " ...");
+		// Now wait for response from server
+		boolean interrupted = false;
+		for (;;) {
+			try {
+				resp = resps.take();
+				break;
+			} catch (InterruptedException ignore) {
+				interrupted = true;
+			}
+		}
 
-	  protected void channelRead0(ChannelHandlerContext ctx, SocketResponse msg)
-	      throws Exception {
-	    resps.add(msg);
-	  }
-	  
-	  @Override
-	  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-	      cause.printStackTrace();
-	      ctx.close();
-	  }
+		if (interrupted) {
+			Thread.currentThread().interrupt();
+		}
+
+		return resp;
+	}
+
+	@Override
+	public void channelRegistered(ChannelHandlerContext ctx) {
+		channel = ctx.channel();
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		cause.printStackTrace();
+		ctx.close();
+	}
 
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, SocketResponse msg)
 			throws Exception {
+		System.out.println(msg.getNumber());
+		System.out.println(msg.getResponseMsg());
 		resps.add(msg);
 	}
 

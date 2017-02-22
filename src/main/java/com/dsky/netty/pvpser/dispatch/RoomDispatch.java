@@ -54,6 +54,7 @@ public class RoomDispatch {
 	    public static void dispatch(ChannelHandlerContext ctx, SocketRequest request) {
 	        if (request.getNumber() == ProtocolCode.JOIN_ROOM) {
 	            logger.debug("Protocol JOIN_ROOM message: " + request);
+	            System.out.println("[Server] -- 客户端请求的服务方法为： [ joinRoom(ctx, request) ]");
 	            joinRoom(ctx, request);
 	        } else if (request.getNumber() == ProtocolCode.WAITTING_USER_JOIN_ROOM) {
 	            logger.debug("Protocol WAITTING_USER_JOIN_ROOM message: " + request);
@@ -98,6 +99,7 @@ public class RoomDispatch {
 	        	response = SocketResponse.newBuilder();
 	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
 	        	response.setResponseMsg("data format error not a json style！\n"+e.getMessage());
+	        	System.out.println("[Server] -- 客户端请求加入房间失败： [ e.getMessage() ]");
 	        	ctx.writeAndFlush(response);
 	        }
 

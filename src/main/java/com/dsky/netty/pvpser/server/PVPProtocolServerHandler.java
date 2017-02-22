@@ -27,53 +27,62 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @创建时间：2017年2月20日 上午10:57:21
  * @版本：V1.0
  */
-public class PVPProtocolServerHandler extends SimpleChannelInboundHandler<SocketRequest> {
-	private static final Logger logger = Logger.getLogger(PVPProtocolServerHandler.class);
-	  
-	  @Override
-	  public void channelReadComplete(ChannelHandlerContext ctx) {
-	      ctx.flush();
-	  }
-
-	  @Override
-	  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-	      cause.printStackTrace();
-	      ctx.close();
-	  }
+public class PVPProtocolServerHandler extends
+		SimpleChannelInboundHandler<SocketRequest> {
+	private static final Logger logger = Logger
+			.getLogger(PVPProtocolServerHandler.class);
 
 	@Override
-	protected void messageReceived(ChannelHandlerContext ctx, SocketRequest request)
-			throws Exception {
-		/*
-	    SocketResponse.Builder builder = SocketResponse.newBuilder();
-	    builder.setResponseMsg("Accepted from Server, returning response")
-	           .setRet(0);
-	    ctx.write(builder.build());*/
-        logger.debug("channel read: " + request.toString());
-
-        // 按照协议规定分发客户端请求到相应的处理逻辑
-        if (request.getNumber() >= ProtocolCode.ROOM_MIN && request.getNumber() <= ProtocolCode.ROOM_MAX){
-            RoomDispatch.dispatch(ctx, request);
-        } else if (request.getNumber() >= ProtocolCode.SYSTEM_MIN && request.getNumber() <= ProtocolCode.SYSTEM_MAX){
-            SystemDispatch.dispatch(ctx, request);
-        } else {
-            logger.error("unknown codec code: " + request.getNumber() + ", message: " + request);
-        }
+	public void channelReadComplete(ChannelHandlerContext ctx) {
+		System.out.println("read complete ...");
+		ctx.flush();
 	}
-	
-	//通道激活时做出的响应写这里
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception  //当客户端连上服务器的时候会触发此函数
-    {
-        System.out.println("clinet:" + ctx.channel().id() + " join server");
-        logger.info("clinet:" + ctx.channel().id() + " join server");
-    }
-    //通道断开时做出的响应写这里
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception//当客户端断开连接的时候触发函数
-    {
-        System.out.println("clinet:" + ctx.channel().id() + " leave server");
-        logger.info("clinet:" + ctx.channel().id() + " leave server");
-        //User.onlineUser.remove(LoginDispatch.getInstance().user);
-    }
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		cause.printStackTrace();
+		ctx.close();
+	}
+
+	@Override
+	protected void messageReceived(ChannelHandlerContext ctx,
+			SocketRequest request) throws Exception {
+		/*
+		 * SocketResponse.Builder builder = SocketResponse.newBuilder();
+		 * builder.setResponseMsg("Accepted from Server, returning response")
+		 * .setRet(0); ctx.write(builder.build());
+		 */
+		logger.debug("channel read: " + request.toString());
+		System.out.println("channel read: " + request.toString());
+		// 按照协议规定分发客户端请求到相应的处理逻辑
+		if (request.getNumber() >= ProtocolCode.ROOM_MIN
+				&& request.getNumber() <= ProtocolCode.ROOM_MAX) {
+			System.out.println("[Server] -- 客户端请求的服务代码为： ["
+					+ request.getNumber() + "]");
+			RoomDispatch.dispatch(ctx, request);
+		} else if (request.getNumber() >= ProtocolCode.SYSTEM_MIN
+				&& request.getNumber() <= ProtocolCode.SYSTEM_MAX) {
+			SystemDispatch.dispatch(ctx, request);
+		} else {
+			logger.error("unknown codec code: " + request.getNumber()
+					+ ", message: " + request);
+		}
+	}
+
+	// 通道激活时做出的响应写这里
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception // 当客户端连上服务器的时候会触发此函数
+	{
+		System.out.println("client:" + ctx.channel().id() + " join server");
+		logger.info("clinet:" + ctx.channel().id() + " join server");
+	}
+
+	// 通道断开时做出的响应写这里
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception// 当客户端断开连接的时候触发函数
+	{
+		System.out.println("client:" + ctx.channel().id() + " leave server");
+		logger.info("client:" + ctx.channel().id() + " leave server");
+		// User.onlineUser.remove(LoginDispatch.getInstance().user);
+	}
 }
