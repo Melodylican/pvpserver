@@ -122,7 +122,11 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void waittingUserJoinRoom(ChannelHandlerContext ctx, SocketRequest request) {
+<<<<<<< HEAD
 /*
+=======
+	        /*
+>>>>>>> 218bc9d52e84b933a578d77aeabfe9cb78b61b11
 	    	final String sourceID = String.valueOf(request.getSourceID());
 	        final String targetID = String.valueOf(request.getTargetID());
 
@@ -147,8 +151,12 @@ public class RoomDispatch {
 	            sendAttackTimeStart(sourceID, targetID); // TODO 是否要发
 	            timerAttackTimeOver(sourceID, targetID);
 	        }
+<<<<<<< HEAD
 */
 	        
+=======
+	        */
+>>>>>>> 218bc9d52e84b933a578d77aeabfe9cb78b61b11
 	    }
 
 	    /**
@@ -158,8 +166,13 @@ public class RoomDispatch {
 	     * @param targetID 对手ID
 	     */
 	    private static void sendAttackTimeStart(String sourceID, String targetID) {
+<<<<<<< HEAD
 	    	/*
 	        SocketResponse response = new SocketResponse();
+=======
+	        /*
+	    	SocketResponse response = new SocketResponse();
+>>>>>>> 218bc9d52e84b933a578d77aeabfe9cb78b61b11
 	        response.setNumber(ProtocolCode.BATTLE_SEND_ATTACK_START);
 	        response.setResult(0);
 	        response.setValueMap(null);
