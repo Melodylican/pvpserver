@@ -14,6 +14,8 @@ import com.dsky.netty.pvpser.common.ProtocolCode;
 import com.dsky.netty.pvpser.dispatch.RoomDispatch;
 import com.dsky.netty.pvpser.dispatch.SystemDispatch;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest;
+import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -34,7 +36,7 @@ public class PVPProtocolServerHandler extends
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) {
-		System.out.println("read complete ...");
+		//System.out.println("read complete ...");
 		ctx.flush();
 	}
 
@@ -74,6 +76,13 @@ public class PVPProtocolServerHandler extends
 	public void channelActive(ChannelHandlerContext ctx) throws Exception // 当客户端连上服务器的时候会触发此函数
 	{
 		System.out.println("client:" + ctx.channel().id() + " join server");
+		/*
+		SocketResponse.Builder socket = SocketResponse.newBuilder();
+		socket.setNumber(ProtocolCode.EXIT_ROOM);
+		socket.setSequence(0);
+		socket.setResponseMsg("sdlfjdlsfjdlsfkj");
+		ctx.channel().writeAndFlush(socket);
+		*/
 		logger.info("clinet:" + ctx.channel().id() + " join server");
 	}
 

@@ -26,6 +26,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 
 import org.apache.log4j.Logger;
 
+import com.dsky.netty.pvpser.common.Config;
 import com.dsky.netty.pvpser.utils.ProReaderUtil;
 
 /**
@@ -76,7 +77,8 @@ public class PVPServer {
     private int PORT;
 
     public PVPServer() {
-        this.PORT = Integer.parseInt(ProReaderUtil.getInstance().getNettyPro().get("port"));
+        //this.PORT = Integer.parseInt(ProReaderUtil.getInstance().getNettyPro().get("netty.port"));
+        this.PORT = Config.SERVER_PORT;
         System.out.println(this.PORT);
     }
 
@@ -94,13 +96,14 @@ public class PVPServer {
 	         bootStrap.group(serverGroup, workerGroup)
 	         .channel(NioServerSocketChannel.class)
 	         .handler(new LoggingHandler(LogLevel.INFO))
+	         /*
 	         .childOption(ChannelOption.TCP_NODELAY, true)
              .childOption(ChannelOption.SO_KEEPALIVE, true)
              .childOption(ChannelOption.SO_REUSEADDR, true) //重用地址
              .childOption(ChannelOption.SO_RCVBUF, 1048576)
              .childOption(ChannelOption.SO_SNDBUF, 1048576)
              .childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(false))  // heap buf 's better
-             
+             */
 	         .childHandler(new PVPServerChannelInitializer());
 	      
 	        // Bind to port 

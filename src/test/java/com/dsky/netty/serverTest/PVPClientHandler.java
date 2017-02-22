@@ -41,18 +41,21 @@ public class PVPClientHandler extends
 		 * GateServerProtocol.GateRequest.Builder reqs =
 		 * GateServerProtocol.GateRequest.newBuilder(); reqs.setRequestMsg("");
 		 */
+		System.out.println("调用了sendRequest 方法 ...");
 		SocketRequest.Builder req = SocketRequest.newBuilder();
-		req.setNumber(ProtocolCode.ROOM_FAILURE);
+		req.setNumber(ProtocolCode.JOIN_ROOM);
+		req.setSequence(0);
 		req.setRequestMsg("{\"roomId\":1,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\"}");
 
-		// Send request
+		// 发送请求
 		channel.writeAndFlush(req);
-		System.out.println(req.getRequestMsg() + " ...");
+		System.out.println("[client] -- 发送的请求信息体是： "+req.getRequestMsg());
 		// Now wait for response from server
 		boolean interrupted = false;
 		for (;;) {
 			try {
 				resp = resps.take();
+				System.out.println("[client] -- 测试点");
 				break;
 			} catch (InterruptedException ignore) {
 				interrupted = true;
@@ -68,6 +71,7 @@ public class PVPClientHandler extends
 
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) {
+		System.out.println("[client] -- 测试点调用了这个方法 。。。");
 		channel = ctx.channel();
 	}
 
@@ -80,8 +84,8 @@ public class PVPClientHandler extends
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, SocketResponse msg)
 			throws Exception {
-		System.out.println(msg.getNumber());
-		System.out.println(msg.getResponseMsg());
+		System.out.println("[client] -- "+msg.getNumber());
+		System.out.println("[client] -- "+msg.getResponseMsg());
 		resps.add(msg);
 	}
 

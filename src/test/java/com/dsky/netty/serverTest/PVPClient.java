@@ -9,6 +9,8 @@
 package com.dsky.netty.serverTest;
 
 
+import com.dsky.netty.pvpser.common.ProtocolCode;
+import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse;
 
 import io.netty.bootstrap.Bootstrap;
@@ -40,8 +42,10 @@ public class PVPClient {
 			
 			//创建连接
 			Channel c = bootstrap.connect(HOST,PORT).sync().channel();
+			
 			//获取一个handle 来发送消息
 			PVPClientHandler handle = c.pipeline().get(PVPClientHandler.class);
+
 			SocketResponse resp = handle.sendRequest();
 			c.close();
 			

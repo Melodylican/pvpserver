@@ -99,13 +99,14 @@ public class RoomDispatch {
 	        	response = SocketResponse.newBuilder();
 	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
 	        	response.setResponseMsg("data format error not a json style！\n"+e.getMessage());
+	        	response.setSequence(0);
 	        	System.out.println("[Server] -- 客户端请求加入房间失败： [ e.getMessage() ]");
 	        	ctx.writeAndFlush(response);
 	        }
 
 	        Room room = RoomRedis.getInstance().getRoom(roomId);
 	        User u = new User(userId,data);
-	        if((room.getCurrentNumber() + 1) <= room.getNumbers()) {
+	        if(room!=null && ((room.getCurrentNumber() + 1) <= room.getNumbers())) {
 	        	HashMap<String,User> map = (HashMap<String, User>) room.getMember();
 	        	map.put(userId, u);
 	        	room.setMember(map);
@@ -114,6 +115,13 @@ public class RoomDispatch {
 	        }
 	        RoomRedis.getInstance().del(roomId);
 	        RoomRedis.getInstance().add(roomId, room);
+	        
+        	response = SocketResponse.newBuilder();
+        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+        	response.setResponseMsg("data format error not a json style！\n");
+        	response.setSequence(0);
+        	System.out.println("[Server] -- 客户端请求加入房间失败： [ e.getMessage() ]");
+        	ctx.writeAndFlush(response);
 	
 	    }
 

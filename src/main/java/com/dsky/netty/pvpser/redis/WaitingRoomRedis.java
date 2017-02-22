@@ -18,10 +18,11 @@ public class WaitingRoomRedis {
      * @return 房间ID
      */
     public String getRandomRoom(int degree) {
-        int min = degree - Config.PLAYER_DEGREE_DRIFT;
-        int max = degree + Config.PLAYER_DEGREE_DRIFT;
+        //int min = degree - Config.PLAYER_DEGREE_DRIFT;
+        //int max = degree + Config.PLAYER_DEGREE_DRIFT;
 
-        return RedisManager.zrandom(Keys.REDIS_PLAIN_GAME_WAITING_ROOM, min, max);
+        //return RedisManager.zrandom(Keys.REDIS_PLAIN_GAME_WAITING_ROOM, min, max);
+    	return "";
     }
 
     /**

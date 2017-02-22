@@ -22,7 +22,7 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
 /**
- * @类功能说明：
+ * @类功能说明： PVPServer初始化类
  * @类修改者：
  * @修改日期：
  * @修改说明：
@@ -41,9 +41,7 @@ public class PVPServerChannelInitializer extends ChannelInitializer<SocketChanne
 
 	    p.addLast(new ProtobufVarint32LengthFieldPrepender());
 	    p.addLast(new ProtobufEncoder());
-	    ch.pipeline().addLast("readTimeOutHandler",
-                new ReadTimeoutHandler(Integer.parseInt(
-                        ProReaderUtil.getInstance().getNettyPro().get("heartBeatTimeOut"))));
+	   // ch.pipeline().addLast("readTimeOutHandler", new ReadTimeoutHandler(Integer.parseInt(ProReaderUtil.getInstance().getNettyPro().get("heartBeatTimeOut"))));
 	    p.addLast(new PVPProtocolServerHandler());
 	  }
 

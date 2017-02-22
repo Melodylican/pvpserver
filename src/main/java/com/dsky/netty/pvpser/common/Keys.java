@@ -1,11 +1,6 @@
 package com.dsky.netty.pvpser.common;
 
-/**
- * User: mengmeng.cheng
- * Date: 4/13/14
- * Time: 2:30 PM
- * Email: chengmengmeng@gmail.com
- */
+
 public class Keys {
 
     // 统一使用的字段分隔符

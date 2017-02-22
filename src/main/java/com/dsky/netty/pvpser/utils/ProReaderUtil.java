@@ -8,15 +8,9 @@ import java.util.HashMap;
 import java.util.Properties;
 
 /**
- * 
- * @类功能说明：配置文件读取类
- * @类修改者：
- * @修改日期：
- * @修改说明：
- * @公司名称：dsky
- * @作者：chris.li
- * @创建时间：2017年2月20日 上午10:26:06
- * @版本：V1.0
+ * 配置文件读取类
+ *
+ * @author chris.li
  */
 public class ProReaderUtil {
 
@@ -96,13 +90,13 @@ public class ProReaderUtil {
         if (redisConf == null) {
             redisConf = new HashMap<String, String>();
             Properties properties = getPro("redis");
-            redisConf.put("host", properties.getProperty("redis.host").trim());
-            redisConf.put("port", properties.getProperty("redis.port").trim());
-            redisConf.put("maxTotal", properties.getProperty("redis.maxTotal").trim());
-            redisConf.put("maxIdle", properties.getProperty("redis.maxIdle").trim());
-            redisConf.put("timeOut", properties.getProperty("redis.timeOut").trim());
-            redisConf.put("retryNum", properties.getProperty("redis.retryNum").trim());
-            redisConf.put("pass", properties.getProperty("redis.pass").trim());
+            redisConf.put("redis.host", properties.getProperty("redis.host").trim());
+            redisConf.put("redis.port", properties.getProperty("redis.port").trim());
+            redisConf.put("redis.maxTotal", properties.getProperty("redis.maxTotal").trim());
+            redisConf.put("redis.maxIdle", properties.getProperty("redis.maxIdle").trim());
+            redisConf.put("redis.timeOut", properties.getProperty("redis.timeOut").trim());
+            redisConf.put("redis.retryNum", properties.getProperty("redis.retryNum").trim());
+            redisConf.put("redis.pass", properties.getProperty("redis.pass").trim());
         }
 
         return redisConf;
@@ -116,9 +110,18 @@ public class ProReaderUtil {
     public HashMap<String, String> getNettyPro() {
         HashMap<String, String> conf = new HashMap<String, String>();
         Properties properties = getPro("netty");
-        conf.put("port", properties.getProperty("netty.port").trim());
-        conf.put("host", properties.getProperty("netty.host").trim());
-        conf.put("heartBeatTimeOut", properties.getProperty("netty.heartBeatTimeOut").trim());
+        conf.put("netty.port", properties.getProperty("netty.port").trim());
+        conf.put("netty.host", properties.getProperty("netty.host").trim());
+        conf.put("netty.heartBeatTimeOut", properties.getProperty("netty.heartBeatTimeOut").trim());
+
+        return conf;
+    }
+    
+    public HashMap<String, String> getHeartbeat() {
+        HashMap<String, String> conf = new HashMap<String, String>();
+        Properties properties = getPro("heartbeat");
+        conf.put("heartbeat.timeout", properties.getProperty("heartbeat.timeout").trim());
+        conf.put("heartbeat.interval", properties.getProperty("heartbeat.interval").trim());
 
         return conf;
     }
@@ -141,14 +144,14 @@ public class ProReaderUtil {
     public HashMap<String, String> getJdbcPro() {
         HashMap<String, String> conf = new HashMap<String, String>();
         Properties properties = getPro("jdbc");
-        conf.put("driver", properties.getProperty("jdbc.driver").trim());
-        conf.put("url", properties.getProperty("jdbc.url").trim());
-        conf.put("userName", properties.getProperty("jdbc.userName").trim());
-        conf.put("password", properties.getProperty("jdbc.password").trim());
-        conf.put("initialSize", properties.getProperty("jdbc.initialSize").trim());
-        conf.put("maxTotal", properties.getProperty("jdbc.maxTotal").trim());
-        conf.put("maxConnLifetimeMillis", properties.getProperty("jdbc.maxConnLifetimeMillis").trim());
-        conf.put("maxIdle", properties.getProperty("jdbc.maxIdle").trim());
+        conf.put("jdbc.driver", properties.getProperty("jdbc.driver").trim());
+        conf.put("jdbc.url", properties.getProperty("jdbc.url").trim());
+        conf.put("jdbc.userName", properties.getProperty("jdbc.userName").trim());
+        conf.put("jdbc.password", properties.getProperty("jdbc.password").trim());
+        conf.put("jdbc.initialSize", properties.getProperty("jdbc.initialSize").trim());
+        conf.put("jdbc.maxTotal", properties.getProperty("jdbc.maxTotal").trim());
+        conf.put("jdbc.maxConnLifetimeMillis", properties.getProperty("jdbc.maxConnLifetimeMillis").trim());
+        conf.put("jdbc.maxIdle", properties.getProperty("jdbc.maxIdle").trim());
         conf.put("minIdle", properties.getProperty("jdbc.minIdle").trim());
         conf.put("maxWaitMillis", properties.getProperty("jdbc.maxWaitMillis").trim());
         return conf;

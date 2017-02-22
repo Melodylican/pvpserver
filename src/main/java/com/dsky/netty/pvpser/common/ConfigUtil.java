@@ -5,12 +5,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-/**
- * User: mengmeng.cheng
- * Date: 4/8/14
- * Time: 5:02 PM
- * Email: chengmengmeng@gmail.com
- */
 public class ConfigUtil {
     private static Map<String, String> configMap = new HashMap<String, String>();
 
