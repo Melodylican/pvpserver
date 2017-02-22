@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SystemDispatch {
     private static final Logger logger = Logger.getLogger(SystemDispatch.class);
-
+    
     /**
      * 分发客户端请求
      *
@@ -52,13 +52,13 @@ public class SystemDispatch {
      * @param ctx ctx
      */
     public static void getSystemInfo(ChannelHandlerContext ctx){
+    	//TODO
         Map<String, String> valueMap = new HashMap<String, String>();
         valueMap.put(Keys.HEARTBEAT_INTERVAL, String.valueOf(Config.HEARTBEAT_INTERVAL));
 
-        SocketResponse response = new SocketResponse();
+        SocketResponse.Builder response = SocketResponse.newBuilder();
         response.setNumber(ProtocolCode.SYSTEM_SEND_INFO);
-        response.setResult(0);
-        response.setValueMap(valueMap);
+
 
         ctx.writeAndFlush(response);
     }
@@ -70,19 +70,19 @@ public class SystemDispatch {
      * @param request 请求指令
      */
     public static void heartBeat(ChannelHandlerContext ctx, final SocketRequest request) {
-        String userID = String.valueOf(request.getSourceID());
+        String userID = String.valueOf(request.getNumber());//request 中获取userId
 
         HeartbeatStore.get(userID).stop();
         HeartbeatStore.remove(userID);
 
-        SocketResponse response = new SocketResponse();
+        SocketResponse.Builder response = SocketResponse.newBuilder();
         response.setNumber(ProtocolCode.SYSTEM_SEND_HEARTBEAT);
-        response.setResult(0);
-        response.setValueMap(null);
+
 
         ctx.writeAndFlush(response);
 
-        timerSendHeartbeat(userID, String.valueOf(request.getTargetID()));
+        //TODO
+        //timerSendHeartbeat(userID, String.valueOf(request.getTargetID()));
     }
 
     /**
@@ -92,6 +92,7 @@ public class SystemDispatch {
      * @param targetID 对手ID
      */
     private static void timerSendHeartbeat(final String sourceID, final String targetID){
+    	/*
         Timer timer = new HashedWheelTimer();
         timer.newTimeout(new TimerTask() {
             @Override
@@ -112,12 +113,14 @@ public class SystemDispatch {
         }, Config.HEARTBEAT_TIMEOUT, TimeUnit.SECONDS);
 
         HeartbeatStore.add(sourceID, timer);
+        */
     }
 
     /**
      * 重新加载配置文件
      */
     public static void reloadConfig(ChannelHandlerContext ctx) {
+    	/*
         ConfigUtil.init();
 
         SocketResponse response = new SocketResponse();
@@ -126,5 +129,6 @@ public class SystemDispatch {
         response.setValue(Keys.SYSTEM_STATUS, Keys.SYSTEM_STATUS_OK);
 
         ctx.writeAndFlush(response);
+        */
     }
 }

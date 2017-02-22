@@ -107,7 +107,7 @@ public class RoomRedis {
      */
     private void timerWaitingPlayerTimeover(String userID, final String roomID, final String degree){
         Timer timer = new HashedWheelTimer();
-
+/*
         timer.newTimeout(new TimerTask() {
             @Override
             public void run(Timeout timeout) throws Exception {
@@ -121,5 +121,6 @@ public class RoomRedis {
         }, Config.PLAYER_TIMEOVER, TimeUnit.SECONDS);
 
         WaitingRoomStore.add(userID, timer);
+        */
     }
 }

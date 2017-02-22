@@ -122,7 +122,8 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void waittingUserJoinRoom(ChannelHandlerContext ctx, SocketRequest request) {
-	        final String sourceID = String.valueOf(request.getSourceID());
+/*
+	    	final String sourceID = String.valueOf(request.getSourceID());
 	        final String targetID = String.valueOf(request.getTargetID());
 
 	        String roomID = UserRedis.getInstance().get(sourceID, Keys.USER_ROOM_ID);
@@ -146,6 +147,8 @@ public class RoomDispatch {
 	            sendAttackTimeStart(sourceID, targetID); // TODO 是否要发
 	            timerAttackTimeOver(sourceID, targetID);
 	        }
+*/
+	        
 	    }
 
 	    /**
@@ -155,6 +158,7 @@ public class RoomDispatch {
 	     * @param targetID 对手ID
 	     */
 	    private static void sendAttackTimeStart(String sourceID, String targetID) {
+	    	/*
 	        SocketResponse response = new SocketResponse();
 	        response.setNumber(ProtocolCode.BATTLE_SEND_ATTACK_START);
 	        response.setResult(0);
@@ -162,6 +166,7 @@ public class RoomDispatch {
 
 	        SocketManager.getDefaultStore().get(sourceID).writeAndFlush(response);
 	        SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
+	        */
 	    }
 
 	    /**
@@ -171,6 +176,7 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void exitRoom(ChannelHandlerContext ctx, SocketRequest request) {
+	    	/*
 	        String sourceID = String.valueOf(request.getSourceID());
 	        String targetID = String.valueOf(request.getTargetID());
 	        String roomID = UserRedis.getInstance().get(sourceID, Keys.USER_ROOM_ID);
@@ -192,6 +198,7 @@ public class RoomDispatch {
 	            response.setValueMap(request.getParamMap());
 	            SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
 	        }
+	        */
 	    }
 
 	    /**
@@ -201,6 +208,7 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void destroyRoom(ChannelHandlerContext ctx, SocketRequest request) {
+	    	/*
 	        String sourceID = String.valueOf(request.getSourceID());
 	        String targetID = String.valueOf(request.getTargetID());
 	        String roomID = UserRedis.getInstance().get(sourceID, Keys.USER_ROOM_ID);
@@ -226,6 +234,7 @@ public class RoomDispatch {
 	                sendBattleResult(roomID, sourceID, targetID);
 	            }
 	        }
+	        */
 	    }
 	    
 	    /**
@@ -235,6 +244,7 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void updateUserData(ChannelHandlerContext ctx, SocketRequest request) {
+	    	/*
 	        String sourceID = String.valueOf(request.getSourceID());
 	        String targetID = String.valueOf(request.getTargetID());
 	        String roomID = UserRedis.getInstance().get(sourceID, Keys.USER_ROOM_ID);
@@ -256,6 +266,7 @@ public class RoomDispatch {
 	            response.setValueMap(request.getParamMap());
 	            SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
 	        }
+	        */
 	    }
 
 
@@ -266,6 +277,7 @@ public class RoomDispatch {
 	     * @param targetID 对手ID
 	     */
 	    private static void timerLayoutTimeOver(final String sourceID, final String targetID) {
+	    	/*
 	        // 启动布局时间定时器
 	        Timer timer = new HashedWheelTimer();
 	        timer.newTimeout(new TimerTask() {
@@ -280,6 +292,7 @@ public class RoomDispatch {
 	                SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
 	            }
 	        }, Config.LAYOUT_TIMEOVER, TimeUnit.SECONDS);
+	        */
 	    }
 
 	    /**
@@ -289,6 +302,7 @@ public class RoomDispatch {
 	     * @param targetID 对手ID
 	     */
 	    private static void timerAttackTimeOver(final String sourceID, final String targetID) {
+	    	/*
 	        // 启动攻击时间定时器
 	        Timer timer = new HashedWheelTimer();
 	        timer.newTimeout(new TimerTask() {
@@ -303,6 +317,7 @@ public class RoomDispatch {
 	                SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
 	            }
 	        }, Config.ATTACK_TIMEOVER, TimeUnit.SECONDS);
+	        */
 	    }
 
 }
