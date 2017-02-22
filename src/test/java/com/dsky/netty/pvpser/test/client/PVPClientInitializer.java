@@ -6,7 +6,7 @@
  * @时间：2017年2月20日 下午3:25:58
  * @版本：V1.0   
  */
-package com.dsky.netty.serverTest;
+package com.dsky.netty.pvpser.test.client;
 
 
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol;

@@ -21,6 +21,7 @@ public class RedisManager {
             config.setMaxIdle(Config.REDIS_MAX_IDLE);
             // 创建连接池
             pool = new JedisPool(config, Config.REDIS_HOST, Config.REDIS_PORT);
+            
         }
     }
 
