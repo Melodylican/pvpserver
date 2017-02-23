@@ -24,7 +24,7 @@ public class ProtocolCode {
     public static final int UPDATE_USER_DATA = 2004;  //更新自身数据 消息体中包含自身用户ID以及房间号和游戏数据
 
     public static final int UPDATE_STATE = 2005;  // 更新房间内自身状态：如准备完成，游戏进行中，掉线等
-    public static final int ROOM_SUCCESS = 2009;  // 返回给客户端发出的请求成功消息
+    public static final int ROOM_SUCCESS = 2008;  // 返回给客户端发出的请求成功消息
     public static final int ROOM_FAILURE = 2009;  // 返回给客户端发出的请求成功消息
     public static final int ROOM_MAX = 2009;
     

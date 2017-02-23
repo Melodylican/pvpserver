@@ -30,7 +30,7 @@ import com.dsky.netty.pvpser.common.Config;
 import com.dsky.netty.pvpser.utils.ProReaderUtil;
 
 /**
- * @类功能说明：
+ * @类功能说明：PVPserver 启动类
  * @类修改者：
  * @修改日期：
  * @修改说明：
@@ -96,14 +96,14 @@ public class PVPServer {
 	         bootStrap.group(serverGroup, workerGroup)
 	         .channel(NioServerSocketChannel.class)
 	         .handler(new LoggingHandler(LogLevel.INFO))
-	         /*
+//	         /*
 	         .childOption(ChannelOption.TCP_NODELAY, true)
              .childOption(ChannelOption.SO_KEEPALIVE, true)
              .childOption(ChannelOption.SO_REUSEADDR, true) //重用地址
              .childOption(ChannelOption.SO_RCVBUF, 1048576)
              .childOption(ChannelOption.SO_SNDBUF, 1048576)
              .childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(false))  // heap buf 's better
-             */
+//           */
 	         .childHandler(new PVPServerChannelInitializer());
 	      
 	        // Bind to port 

@@ -27,9 +27,9 @@ public class Room implements Serializable{
 	//房间号
 	private String roomId;
 	//房间创建时间
-	private int roomCreateTime;
+	private int roomCreatetime;
 	//房间销毁时间
-	private int roomDelTime;
+	private int roomDeltime;
 	//房间创建者
 	private String roomOwner;
 	//房间人数
@@ -47,21 +47,7 @@ public class Room implements Serializable{
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
 	}
-	public int getRoomCreateTime() {
-		return roomCreateTime;
-	}
-	public void setRoomCreateTime(int roomCreateTime) {
-		this.roomCreateTime = roomCreateTime;
-	}
-	public int getRoomDelTime() {
-		return roomDelTime;
-	}
-	public void setRoomDelTime(int roomDelTime) {
-		this.roomDelTime = roomDelTime;
-	}
-	public String getRoomOwner() {
-		return roomOwner;
-	}
+
 	public void setRoomOwner(String roomOwner) {
 		this.roomOwner = roomOwner;
 	}
@@ -89,10 +75,25 @@ public class Room implements Serializable{
 	public void setCurrentNumber(int currentNumber) {
 		this.currentNumber = currentNumber;
 	}
+	public int getRoomCreatetime() {
+		return roomCreatetime;
+	}
+	public void setRoomCreatetime(int roomCreatetime) {
+		this.roomCreatetime = roomCreatetime;
+	}
+	public int getRoomDeltime() {
+		return roomDeltime;
+	}
+	public void setRoomDeltime(int roomDeltime) {
+		this.roomDeltime = roomDeltime;
+	}
+	public String getRoomOwner() {
+		return roomOwner;
+	}
 	@Override
 	public String toString() {
-		return "Room [roomId=" + roomId + ", roomCreateTime=" + roomCreateTime
-				+ ", roomDelTime=" + roomDelTime + ", roomOwner=" + roomOwner
+		return "Room [roomId=" + roomId + ", roomCreatetime=" + roomCreatetime
+				+ ", roomDeltime=" + roomDeltime + ", roomOwner=" + roomOwner
 				+ ", numbers=" + numbers + ", currentNumber=" + currentNumber
 				+ ", member=" + member + ", roomStatus=" + roomStatus + "]";
 	}

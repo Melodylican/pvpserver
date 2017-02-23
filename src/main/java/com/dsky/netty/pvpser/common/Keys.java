@@ -6,49 +6,8 @@ public class Keys {
     // 统一使用的字段分隔符
     public static final String DELIMITER = "_";
 
-    // Redis 用户相关字段
-    public static final String REDIS_USER_PREFIX = "user_";
-
-    public static final String USER_ID = "user_id";
-
-    public static final String USER_NAME = "user_name";
-
-    public static final String USER_AVATAR = "avatar";
-
-    public static final String USER_SCORE = "score";
-
-    public static final String USER_DEGREE = "degree";
-
-    public static final String USER_ROOM_ID = "room_id";
-
-    public static final String USER_OPEN_USER_ID = "open_user_id";
-
-    public static final String USER_OPEN_SOURCE = "open_source";
-
-    // Redis 序列相关字段
-    public static final String REDIS_SEQUENCE = "sequence";
-
-    public static final String SEQUENCE_USER_ID = "user_id";
-
-    public static final String SEQUENCE_ROOM_ID = "room_id";
-
-    // Redis 开放平台用户对应关系相关字段
-    public static final String REDIS_OPEN_USER = "open_user";
-
-    // 战斗结果相关字段
-    public static final String BATTLE_RESULT = "result";
-
-    public static final String BATTLE_RESULT_WIN = "0";
-
-    public static final String BATTLE_RESULT_FAIL = "1";
-
-    public static final String BATTLE_RESULT_DRAW = "2";
-
-    // Redis 排行榜相关字段
-    public static final String REDIS_PLAIN_GAME_RANK = "plain_game_rank";
-
     // Redis 游戏房间相关字段
-    public static final String REDIS_PLAIN_GAME_ROOM_PREFIX = "plain_game_room_";
+    public static final String REDIS_GAME_ROOM_PREFIX = "room_information_";
 
     public static final String ROOM_ROUND = "round";
 

@@ -29,7 +29,7 @@ public class RoomRedis {
      * @return 字段值
      */
     public Room getRoom(String roomID) {
-        return RedisManager.get(Keys.REDIS_PLAIN_GAME_ROOM_PREFIX + roomID);
+        return RedisManager.get(Keys.REDIS_GAME_ROOM_PREFIX + roomID);
     }
 
     /**
@@ -40,7 +40,7 @@ public class RoomRedis {
      * @param value 字段值
      */
     public void add(String roomID, String field, String value) {
-        RedisManager.hset(Keys.REDIS_PLAIN_GAME_ROOM_PREFIX + roomID, field, value);
+        RedisManager.hset(Keys.REDIS_GAME_ROOM_PREFIX + roomID, field, value);
     }
 
     /**
@@ -51,7 +51,7 @@ public class RoomRedis {
      * @param increment 增量
      */
     public void add(String roomID, String field, int increment) {
-        RedisManager.hincrBy(Keys.REDIS_PLAIN_GAME_ROOM_PREFIX + roomID, field, increment);
+        RedisManager.hincrBy(Keys.REDIS_GAME_ROOM_PREFIX + roomID, field, increment);
     }
     
     /**
@@ -73,7 +73,7 @@ public class RoomRedis {
      * @throws
      */
     public void add(String roomID, Room room) {
-        RedisManager.set(roomID, room);
+        RedisManager.set(Keys.REDIS_GAME_ROOM_PREFIX+roomID, room);
     }
 
     /**
@@ -83,7 +83,7 @@ public class RoomRedis {
      * @param field 字段
      */
     public void del(String roomID, String field) {
-        RedisManager.hdel(Keys.REDIS_PLAIN_GAME_ROOM_PREFIX + roomID, field);
+        RedisManager.hdel(Keys.REDIS_GAME_ROOM_PREFIX + roomID, field);
     }
     
     /**
@@ -93,7 +93,7 @@ public class RoomRedis {
      * @param field 字段
      */
     public void del(String roomID) {
-        RedisManager.del(Keys.REDIS_PLAIN_GAME_ROOM_PREFIX + roomID);
+        RedisManager.del(Keys.REDIS_GAME_ROOM_PREFIX + roomID);
     }
 
   

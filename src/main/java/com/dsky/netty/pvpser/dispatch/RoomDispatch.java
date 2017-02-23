@@ -58,6 +58,7 @@ public class RoomDispatch {
 	            joinRoom(ctx, request);
 	        } else if (request.getNumber() == ProtocolCode.WAITTING_USER_JOIN_ROOM) {
 	            logger.debug("Protocol WAITTING_USER_JOIN_ROOM message: " + request);
+	            System.out.println("[Server] -- 客户端请求的服务方法为： [ waittingUserJoinRoom(ctx, request) ]");
 	            waittingUserJoinRoom(ctx, request);
 	        } else if (request.getNumber() == ProtocolCode.EXIT_ROOM) {
 	            logger.debug("Protocol EXIT_ROOM message: " + request);
@@ -102,6 +103,7 @@ public class RoomDispatch {
 	        	response.setSequence(0);
 	        	System.out.println("[Server] -- 客户端请求加入房间失败： [ e.getMessage() ]");
 	        	ctx.writeAndFlush(response);
+	        	return;
 	        }
 
 	        Room room = RoomRedis.getInstance().getRoom(roomId);
@@ -111,16 +113,16 @@ public class RoomDispatch {
 	        	map.put(userId, u);
 	        	room.setMember(map);
 	        	room.setCurrentNumber(room.getCurrentNumber()+1);
-	        	//TODO 继续完善用户加入房间后的处理逻辑
+	        	//TODO 继续完善用户加入房间后的处理逻辑  例如通知房间内其他玩家
 	        }
 	        RoomRedis.getInstance().del(roomId);
 	        RoomRedis.getInstance().add(roomId, room);
 	        
         	response = SocketResponse.newBuilder();
-        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+        	response.setNumber(ProtocolCode.ROOM_SUCCESS);
         	response.setResponseMsg("data format error not a json style！\n");
         	response.setSequence(0);
-        	System.out.println("[Server] -- 客户端请求加入房间失败： [ e.getMessage() ]");
+        	System.out.println("[Server] -- 客户端请求加入房间成功");
         	ctx.writeAndFlush(response);
 	
 	    }
@@ -132,35 +134,77 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void waittingUserJoinRoom(ChannelHandlerContext ctx, SocketRequest request) {
-
-	        /*
-
-	    	final String sourceID = String.valueOf(request.getSourceID());
-	        final String targetID = String.valueOf(request.getTargetID());
-
-	        String roomID = UserRedis.getInstance().get(sourceID, Keys.USER_ROOM_ID);
-
-	        RoomRedis.getInstance().add(roomID, Keys.ROOM_LAYOUT_INFO_PREFIX + sourceID, JSON.toJSONString(request.getParamMap()));
-	        String targetLayoutInfo = RoomRedis.getInstance().get(roomID, Keys.ROOM_LAYOUT_INFO_PREFIX + targetID);
-
-	        if (targetLayoutInfo != null && !targetLayoutInfo.equals("")){
-	            RoomRedis.getInstance().del(roomID, Keys.ROOM_LAYOUT_INFO_PREFIX + sourceID);
-	            RoomRedis.getInstance().del(roomID, Keys.ROOM_LAYOUT_INFO_PREFIX + targetID);
-
-	            SocketResponse response = new SocketResponse();
-	            response.setNumber(ProtocolCode.BATTLE_SEND_LAYOUT_INFO);
-	            response.setResult(0);
-	            response.setValueMap(JSON.parseObject(targetLayoutInfo, new TypeReference<Map<String, String>>() {}));
-
-	            ctx.writeAndFlush(response);
-	            response.setValueMap(request.getParamMap());
-	            SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
-
-	            sendAttackTimeStart(sourceID, targetID); // TODO 是否要发
-	            timerAttackTimeOver(sourceID, targetID);
+	    	SocketResponse.Builder response = null;
+	        String jsonMsg = String.valueOf(request.getRequestMsg());
+	        JSONObject jsonObj = null;
+	        String roomId = "";//房间号
+	        String userId = "";//房主
+	        String data = "";//房主信息
+	        String roomCreatetime = "";//房间创建的时间
+	        String numbers = "";//房间人数设定
+	        
+	        try{
+	        	jsonObj =  com.alibaba.fastjson.JSON.parseObject(jsonMsg);
+	        	if(jsonObj.containsKey("roomId") 
+	        			&& jsonObj.containsKey("userId") 
+	        			&& jsonObj.containsKey("data")
+	        			&& jsonObj.containsKey("roomCreatetime")
+	        			&& jsonObj.containsKey("numbers")) {
+	        		roomId = jsonObj.getString("roomId");
+	        		userId = jsonObj.getString("userId");
+	        		data = jsonObj.getString("data");
+	        		roomCreatetime = jsonObj.getString("roomCreatetime");
+	        		numbers = jsonObj.getString("numbers");
+	        		try{
+		        		Room room = new Room();
+		        		room.setCurrentNumber(1);
+		        		room.setRoomId(roomId);
+		        		room.setNumbers(Integer.parseInt(numbers));
+		        		room.setRoomCreatetime(Integer.parseInt(roomCreatetime));
+		        		room.setRoomOwner(userId);
+		        		User user = new User(userId,data);
+		        		Map<String,User> map = new HashMap<String,User>();
+		        		map.put(userId, user);
+		        		room.setMember(map);
+		        		room.setRoomStatus(1);//设置房间处于等待状态
+		        		//将房间信息存入Redis中
+		        		RoomRedis.getInstance().add(roomId, room);
+	        		} catch(NumberFormatException e) {
+	        			String parameter = "[roomId : "+roomId+"],[numbers : "+numbers+"],[userId : "+userId+"],[roomCreatetime : "+roomCreatetime+"]";
+	    	        	response = SocketResponse.newBuilder();
+	    	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	    	        	response.setResponseMsg("Incorrect parameter type ！\n"+parameter+e.getMessage());
+	    	        	response.setSequence(0);
+	    	        	System.out.println("[Server] -- 客户端请求加入房间失败： ["+ e.getMessage()+"\n ]");
+	    	        	ctx.writeAndFlush(response);
+	        		}
+	        	} else
+	        		throw new JSONException("parameter is not complete\n");
+	        }catch(JSONException e) {
+	        	response = SocketResponse.newBuilder();
+	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	        	response.setResponseMsg("data format error not a json style！\n"+jsonMsg+"\n"+e.getMessage());
+	        	response.setSequence(0); //TODO
+	        	System.out.println("[Server] -- 客户端请求加入房间失败： ["+jsonMsg+"\n"+ e.getMessage()+"\n ]");
+	        	ctx.writeAndFlush(response);
+	        	return ;
 	        }
 
-*/
+	        Room room1 = RoomRedis.getInstance().getRoom(roomId);
+	        System.out.println("[Server]  -- 获取的房间信息是： "+room1.getCurrentNumber()+room1.getMember().get("123456")+" .....");
+	        
+        	response = SocketResponse.newBuilder();
+        	response.setNumber(ProtocolCode.ROOM_SUCCESS);
+        	response.setResponseMsg("Congratulations ! Room created successfully, waiting for players to join！\n");
+        	response.setSequence(0); //TODO
+        	System.out.println("[Server] -- 客户端请求创建房间成功");
+        	ctx.writeAndFlush(response);
+
+	        /*
+	            sendAttackTimeStart(sourceID, targetID); // TODO 是否要发
+	            timerAttackTimeOver(sourceID, targetID);
+
+	         */
 
 	    }
 
@@ -191,6 +235,50 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void exitRoom(ChannelHandlerContext ctx, SocketRequest request) {
+	    	SocketResponse.Builder response = null;
+	        String jsonMsg = String.valueOf(request.getRequestMsg());
+	        JSONObject jsonObj = null;
+	        String roomId = "";
+	        String userId = "";
+	        String data = "";
+	        
+	        try{
+	        	jsonObj =  com.alibaba.fastjson.JSON.parseObject(jsonMsg);
+	        	if(jsonObj.containsKey("roomId") && jsonObj.containsKey("userId") && jsonObj.containsKey("data")) {
+	        		roomId = jsonObj.getString("roomId");
+	        		userId = jsonObj.getString("userId");
+	        		data = jsonObj.getString("data");
+	        	} else
+	        		throw new JSONException("data not contain roomId field\n");
+	        }catch(JSONException e) {
+	        	response = SocketResponse.newBuilder();
+	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	        	response.setResponseMsg("data format error not a json style！\n"+jsonMsg+"\n"+e.getMessage());
+	        	response.setSequence(0); //TODO
+	        	System.out.println("[Server] -- 客户端请求退出房间失败： [ "+e.getMessage()+" ]");
+	        	ctx.writeAndFlush(response);
+	        	return ;
+	        }
+
+	        Room room = RoomRedis.getInstance().getRoom(roomId);
+	       
+	        if(room!=null ) {
+	        	HashMap<String,User> map = (HashMap<String, User>) room.getMember();
+	        	map.containsKey(userId);
+	        	map.remove(userId);
+	        	room.setMember(map);
+	        	room.setCurrentNumber(room.getCurrentNumber()-1);
+	        	//TODO 继续完善用户离开房间后的处理逻辑 例如通知房间内其他玩家 
+	        }
+	        RoomRedis.getInstance().del(roomId);
+	        RoomRedis.getInstance().add(roomId, room);
+	        
+        	response = SocketResponse.newBuilder();
+        	response.setNumber(ProtocolCode.ROOM_SUCCESS);
+        	response.setResponseMsg(userId+" exit room ["+room.getRoomId()+"] success ！\n");
+        	response.setSequence(0); //TODO
+        	System.out.println("[Server] -- 客户端请求离开房间成功");
+        	ctx.writeAndFlush(response);
 	    	/*
 	        String sourceID = String.valueOf(request.getSourceID());
 	        String targetID = String.valueOf(request.getTargetID());
@@ -223,33 +311,55 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void destroyRoom(ChannelHandlerContext ctx, SocketRequest request) {
-	    	/*
-	        String sourceID = String.valueOf(request.getSourceID());
-	        String targetID = String.valueOf(request.getTargetID());
-	        String roomID = UserRedis.getInstance().get(sourceID, Keys.USER_ROOM_ID);
-
-	        RoomRedis.getInstance().add(roomID, Keys.ROOM_ATTACK_RESULT_PREFIX + sourceID, JSON.toJSONString(request.getParamMap()));
-	        String targetAttackResult = RoomRedis.getInstance().get(roomID, Keys.ROOM_ATTACK_RESULT_PREFIX + targetID);
-
-	        if (targetAttackResult != null && !targetAttackResult.equals("")){
-	            RoomRedis.getInstance().del(roomID, Keys.ROOM_ATTACK_RESULT_PREFIX + sourceID);
-	            RoomRedis.getInstance().del(roomID, Keys.ROOM_ATTACK_RESULT_PREFIX + targetID);
-
-	            // 增加回合数
-	            RoomRedis.getInstance().add(roomID, Keys.ROOM_ROUND, 1);
-
-	            Map<String, String> targetParamMap = JSON.parseObject(targetAttackResult, new TypeReference<Map<String, String>>() {});
-	            int sourceRemain = Integer.parseInt(targetParamMap.get(Keys.ROOM_ATTACK_RESULT_PLAIN_REMAIN));
-	            int targetRemain = Integer.parseInt(request.getValue(Keys.ROOM_ATTACK_RESULT_PLAIN_REMAIN));
-
-	            if (sourceRemain != 0 && targetRemain != 0){
-	                sendAttackTimeStart(sourceID, targetID);
-	                timerAttackTimeOver(sourceID, targetID);
-	            } else {
-	                sendBattleResult(roomID, sourceID, targetID);
-	            }
+	    	SocketResponse.Builder response = null;
+	        String jsonMsg = String.valueOf(request.getRequestMsg());
+	        JSONObject jsonObj = null;
+	        String roomId = "";
+	        String userId = "";
+	        String data = "";
+	        
+	        try{
+	        	jsonObj =  com.alibaba.fastjson.JSON.parseObject(jsonMsg);
+	        	if(jsonObj.containsKey("roomId") && jsonObj.containsKey("userId") && jsonObj.containsKey("data")) {
+	        		roomId = jsonObj.getString("roomId");
+	        		userId = jsonObj.getString("userId");
+	        		data = jsonObj.getString("data");
+	        	} else
+	        		throw new JSONException("data not contain roomId field\n");
+	        }catch(JSONException e) {
+	        	response = SocketResponse.newBuilder();
+	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	        	response.setResponseMsg("data format error not a json style！\n"+jsonMsg+"\n"+e.getMessage());
+	        	response.setSequence(0); //TODO
+	        	System.out.println("[Server] -- 客户端请求销毁房间失败： [ "+e.getMessage()+" ]");
+	        	ctx.writeAndFlush(response);
+	        	return ;
 	        }
-	        */
+
+	        Room room = RoomRedis.getInstance().getRoom(roomId);
+	       
+	        if(room!=null ) {
+	        	HashMap<String,User> map = (HashMap<String, User>) room.getMember();
+	        	if(room.getRoomId().equals(roomId))
+	        		RoomRedis.getInstance().del(roomId);
+	        	//TODO 继续完善房主撤销房间后的处理逻辑 例如通知房间内其他玩家房间解散
+	        	else {
+	            	response = SocketResponse.newBuilder();
+	            	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	            	response.setResponseMsg(userId+" destroy room ["+room.getRoomId()+"] failure ,You have no right to destroy the room ！\n");
+	            	response.setSequence(0); //TODO
+	            	System.out.println("[Server] -- 客户端请求销毁房间失败");
+	            	ctx.writeAndFlush(response);
+	            	return ;
+	        	}
+	        }
+        
+        	response = SocketResponse.newBuilder();
+        	response.setNumber(ProtocolCode.ROOM_SUCCESS);
+        	response.setResponseMsg(userId+" exit room ["+room.getRoomId()+"] success ！\n");
+        	response.setSequence(0); //TODO
+        	System.out.println("[Server] -- 客户端请求销毁房间成功");
+        	ctx.writeAndFlush(response);
 	    }
 	    
 	    /**
@@ -259,6 +369,62 @@ public class RoomDispatch {
 	     * @param request 请求指令
 	     */
 	    public static void updateUserData(ChannelHandlerContext ctx, SocketRequest request) {
+	    	SocketResponse.Builder response = null;
+	        String jsonMsg = String.valueOf(request.getRequestMsg());
+	        JSONObject jsonObj = null;
+	        String roomId = "";
+	        String userId = "";
+	        String data = "";
+	        
+	        try{
+	        	jsonObj =  com.alibaba.fastjson.JSON.parseObject(jsonMsg);
+	        	if(jsonObj.containsKey("roomId") && jsonObj.containsKey("userId") && jsonObj.containsKey("data")) {
+	        		roomId = jsonObj.getString("roomId");
+	        		userId = jsonObj.getString("userId");
+	        		data = jsonObj.getString("data");
+	        	} else
+	        		throw new JSONException("parameter not complete \n"+jsonMsg);
+	        }catch(JSONException e) {
+	        	response = SocketResponse.newBuilder();
+	        	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	        	response.setResponseMsg("data format error not a json style！\n"+jsonMsg+"\n"+e.getMessage());
+	        	response.setSequence(0); //TODO
+	        	System.out.println("[Server] -- 客户端请求销毁房间失败： [ "+e.getMessage()+" ]");
+	        	ctx.writeAndFlush(response);
+	        	return ;
+	        }
+
+	        Room room = RoomRedis.getInstance().getRoom(roomId);
+	       
+	        if(room!=null ) {
+	        	HashMap<String,User> map = (HashMap<String, User>) room.getMember();
+	        	if(map.containsKey(userId)) {
+	        		User user= map.get(userId);
+	        		user.setData(data);
+	        		map.remove(userId);
+	        		map.put(userId, user);
+	        		room.setMember(map);
+	    	        RoomRedis.getInstance().del(roomId);
+	    	        RoomRedis.getInstance().add(roomId, room);
+	        	} else {
+	            	response = SocketResponse.newBuilder();
+	            	response.setNumber(ProtocolCode.ROOM_FAILURE);
+	            	response.setResponseMsg(userId+" update ["+room.getRoomId()+"] failure ！\n");
+	            	response.setSequence(0); //TODO
+	            	System.out.println("[Server] -- 客户端更新房间成功");
+	            	ctx.writeAndFlush(response);
+	            	return ;
+	        	}
+	        }
+        
+	        //TODO 返回信息需要修改，需要返回整个房间的玩家的所有信息
+        	response = SocketResponse.newBuilder();
+        	response.setNumber(ProtocolCode.ROOM_SUCCESS);
+        	response.setResponseMsg(userId+" exit room ["+room.getRoomId()+"] success ！\n");
+        	response.setSequence(0); //TODO
+        	System.out.println("[Server] -- 客户端请求更新房间成功");
+        	ctx.writeAndFlush(response);
+	    	
 	    	/*
 	        String sourceID = String.valueOf(request.getSourceID());
 	        String targetID = String.valueOf(request.getTargetID());

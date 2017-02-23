@@ -43,9 +43,9 @@ public class PVPClientHandler extends
 		 */
 		System.out.println("调用了sendRequest 方法 ...");
 		SocketRequest.Builder req = SocketRequest.newBuilder();
-		req.setNumber(ProtocolCode.JOIN_ROOM);
+		req.setNumber(ProtocolCode.WAITTING_USER_JOIN_ROOM);
 		req.setSequence(0);
-		req.setRequestMsg("{\"roomId\":1,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\"}");
+		req.setRequestMsg("{\"roomId\":154321321,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\",\"roomCreatetime\":1321456421,\"numbers\":3}");
 
 		// 发送请求
 		channel.writeAndFlush(req);
@@ -58,6 +58,7 @@ public class PVPClientHandler extends
 				System.out.println("[client] -- 测试点");
 				break;
 			} catch (InterruptedException ignore) {
+				System.out.println("[client] -- 测试点   InterruptedException");
 				interrupted = true;
 			}
 		}
