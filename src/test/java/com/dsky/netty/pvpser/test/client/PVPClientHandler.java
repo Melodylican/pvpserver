@@ -41,15 +41,7 @@ public class PVPClientHandler extends
 		 * GateServerProtocol.GateRequest.Builder reqs =
 		 * GateServerProtocol.GateRequest.newBuilder(); reqs.setRequestMsg("");
 		 */
-		System.out.println("调用了sendRequest 方法 ...");
-		SocketRequest.Builder req = SocketRequest.newBuilder();
-		req.setNumber(ProtocolCode.SYSTEM_UPLOAD_HEARTBEAT);
-		req.setSequence(0);
-		req.setRequestMsg("{\"roomId\":154321321,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\",\"roomCreatetime\":1321456421,\"numbers\":3}");
 
-		// 发送请求
-		channel.writeAndFlush(req);
-		System.out.println("[client] -- 发送的请求信息体是： "+req.getRequestMsg());
 		// Now wait for response from server
 		boolean interrupted = false;
 		for (;;) {

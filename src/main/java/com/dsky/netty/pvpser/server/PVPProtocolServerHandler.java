@@ -76,6 +76,8 @@ public class PVPProtocolServerHandler extends
 	public void channelActive(ChannelHandlerContext ctx) throws Exception // 当客户端连上服务器的时候会触发此函数
 	{
 		System.out.println("client:" + ctx.channel().id() + " join server");
+		SocketManager.getDefaultStore().add("123", ctx);
+		
 		/*
 		SocketResponse.Builder socket = SocketResponse.newBuilder();
 		socket.setNumber(ProtocolCode.EXIT_ROOM);

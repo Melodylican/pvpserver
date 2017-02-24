@@ -38,6 +38,7 @@ public class SystemDispatch {
             getSystemInfo(ctx);
         } else if (request.getNumber() == ProtocolCode.SYSTEM_UPLOAD_HEARTBEAT) {
             logger.debug("Protocol SYSTEM_UPLOAD_HEARTBEAT message: " + request);
+            System.out.println("调用发送心跳方法");
             heartBeat(ctx, request);
         } else if (request.getNumber() == ProtocolCode.SYSTEM_RELOAD_CONFIG){
             logger.debug("Protocol SYSTEM_RELOAD_CONFIG message: " + request);
@@ -73,18 +74,23 @@ public class SystemDispatch {
     public static void heartBeat(ChannelHandlerContext ctx, final SocketRequest request) {
         String userID = String.valueOf(request.getNumber());//request 中获取userId
 
-        HeartbeatStore.get(userID).stop();
-        HeartbeatStore.remove(userID);
+        //收到用户的心跳数据 首先停止用户的超时计时器，并且将其删除
+        Timer timer= HeartbeatStore.get(userID);
+        if(null != timer) {
+        	timer.stop();
+        	HeartbeatStore.remove(userID);
+        }
+        
 
+        //向客户端返回心跳包确认数据
         SocketResponse.Builder response = SocketResponse.newBuilder();
         response.setNumber(ProtocolCode.SYSTEM_SEND_HEARTBEAT);
         response.setSequence(0);
-        response.setResponseMsg(null);
-
-
+        response.setResponseMsg("[Server] -- 服务端收到心跳确认");
         ctx.writeAndFlush(response);
 
         //TODO
+        //从新为该用户设定一个超时定时器
         timerSendHeartbeat(userID, /*String.valueOf(request.getTargetID())*/"1322");
     }
 
@@ -92,25 +98,27 @@ public class SystemDispatch {
      * 心跳超时定时器
      *
      * @param sourceID 用户ID
-     * @param targetID 对手ID
+     * @param roomID 房间ID
      */
-    private static void timerSendHeartbeat(final String sourceID, final String targetID){
+    private static void timerSendHeartbeat(final String sourceID, final String roomID){
 //    	/*
         Timer timer = new HashedWheelTimer();
         timer.newTimeout(new TimerTask() {
             public void run(Timeout timeout) throws Exception {
+            	System.out.println(sourceID+"  掉线了 。。。");
+            	/*
                 SocketManager.getDefaultStore().get(sourceID).fireChannelInactive();
                 SocketManager.getDefaultStore().get(sourceID).close();
                 SocketManager.getDefaultStore().remove(sourceID);
+            	 */
+            	SocketResponse.Builder response = SocketResponse.newBuilder();
+                response.setNumber(ProtocolCode.PLAYER_OFFLINE);
+                response.setSequence(0);
+                response.setResponseMsg(sourceID+" 掉线了");
+                //通知房间内的其他玩家 该玩家已掉线
+                SocketManager.getDefaultStore().get("123").writeAndFlush(response);
+                
 
-                if (!targetID.equals("0")){
-                	SocketResponse.Builder response = SocketResponse.newBuilder();
-                    response.setNumber(ProtocolCode.PLAYER_OFFLINE);
-                    response.setSequence(0);
-
-
-                    SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
-                }
             }
         }, Config.HEARTBEAT_TIMEOUT, TimeUnit.SECONDS);
 
