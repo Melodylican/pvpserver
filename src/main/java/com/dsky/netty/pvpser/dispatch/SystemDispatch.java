@@ -15,6 +15,7 @@ import com.dsky.netty.pvpser.common.Keys;
 import com.dsky.netty.pvpser.common.ProtocolCode;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse;
+import com.dsky.netty.pvpser.server.SocketManager;
 import com.dsky.netty.pvpser.store.HeartbeatStore;
 
 import java.util.HashMap;
@@ -77,12 +78,14 @@ public class SystemDispatch {
 
         SocketResponse.Builder response = SocketResponse.newBuilder();
         response.setNumber(ProtocolCode.SYSTEM_SEND_HEARTBEAT);
+        response.setSequence(0);
+        response.setResponseMsg(null);
 
 
         ctx.writeAndFlush(response);
 
         //TODO
-        //timerSendHeartbeat(userID, String.valueOf(request.getTargetID()));
+        timerSendHeartbeat(userID, /*String.valueOf(request.getTargetID())*/"1322");
     }
 
     /**
@@ -92,20 +95,19 @@ public class SystemDispatch {
      * @param targetID 对手ID
      */
     private static void timerSendHeartbeat(final String sourceID, final String targetID){
-    	/*
+//    	/*
         Timer timer = new HashedWheelTimer();
         timer.newTimeout(new TimerTask() {
-            @Override
             public void run(Timeout timeout) throws Exception {
                 SocketManager.getDefaultStore().get(sourceID).fireChannelInactive();
                 SocketManager.getDefaultStore().get(sourceID).close();
                 SocketManager.getDefaultStore().remove(sourceID);
 
                 if (!targetID.equals("0")){
-                    SocketResponse response = new SocketResponse();
-                    response.setNumber(ProtocolCode.BATTLE_SEND_PLAYER_OFFLINE);
-                    response.setResult(0);
-                    response.setValueMap(null);
+                	SocketResponse.Builder response = SocketResponse.newBuilder();
+                    response.setNumber(ProtocolCode.PLAYER_OFFLINE);
+                    response.setSequence(0);
+
 
                     SocketManager.getDefaultStore().get(targetID).writeAndFlush(response);
                 }
@@ -113,7 +115,7 @@ public class SystemDispatch {
         }, Config.HEARTBEAT_TIMEOUT, TimeUnit.SECONDS);
 
         HeartbeatStore.add(sourceID, timer);
-        */
+//        */
     }
 
     /**

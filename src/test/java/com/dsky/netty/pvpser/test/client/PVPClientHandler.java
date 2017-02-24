@@ -43,7 +43,7 @@ public class PVPClientHandler extends
 		 */
 		System.out.println("调用了sendRequest 方法 ...");
 		SocketRequest.Builder req = SocketRequest.newBuilder();
-		req.setNumber(ProtocolCode.WAITTING_USER_JOIN_ROOM);
+		req.setNumber(ProtocolCode.SYSTEM_UPLOAD_HEARTBEAT);
 		req.setSequence(0);
 		req.setRequestMsg("{\"roomId\":154321321,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\",\"roomCreatetime\":1321456421,\"numbers\":3}");
 

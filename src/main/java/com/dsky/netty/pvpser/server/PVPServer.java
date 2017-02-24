@@ -105,6 +105,15 @@ public class PVPServer {
              .childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(false))  // heap buf 's better
 //           */
 	         .childHandler(new PVPServerChannelInitializer());
+	         
+//           SocketManager.schedule(new HeartbeatTimer(), Config.HEARTBEAT_INTERVAL);
+//          logger.info("Scheduled HeartbeatTimer ...");
+//
+//           SocketManager.schedule(new LayoutTimer(), Config.LAYOUT_TIMEOVER);
+//           logger.info("Scheduled LayoutTimer ...");
+//
+//           SocketManager.schedule(new AttackTimer(), Config.ATTACK_TIMEOVER);
+//           logger.info("Scheduled AttackTimer ...");	         
 	      
 	        // Bind to port 
 	        bootStrap.bind(PORT).sync().channel().closeFuture().sync();

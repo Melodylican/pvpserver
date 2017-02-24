@@ -44,4 +44,6 @@ public class ProtocolCode {
     public static final int SYSTEM_SEND_RELOAD_CONFIG = 9999; // 回复热加载配置
 
     public static final int SYSTEM_MAX = 9999;
+    
+    public static final int PLAYER_OFFLINE = 10000; //用户下线
 }
