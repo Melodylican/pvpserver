@@ -47,7 +47,6 @@ public class Room implements Serializable{
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
 	}
-
 	public void setRoomOwner(String roomOwner) {
 		this.roomOwner = roomOwner;
 	}

@@ -8,9 +8,15 @@ public final class PVPSerProtocol {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
+
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
   public interface SocketRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:SocketRequest)
-      com.google.protobuf.MessageLiteOrBuilder {
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>required int32 number = 1;</code>
@@ -22,33 +28,66 @@ public final class PVPSerProtocol {
     int getNumber();
 
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>required string userId = 2;</code>
+     */
+    boolean hasUserId();
+    /**
+     * <code>required string userId = 2;</code>
+     */
+    java.lang.String getUserId();
+    /**
+     * <code>required string userId = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getUserIdBytes();
+
+    /**
+     * <code>required string roomId = 3;</code>
+     */
+    boolean hasRoomId();
+    /**
+     * <code>required string roomId = 3;</code>
+     */
+    java.lang.String getRoomId();
+    /**
+     * <code>required string roomId = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getRoomIdBytes();
+
+    /**
+     * <code>optional int32 sequence = 4;</code>
      */
     boolean hasSequence();
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>optional int32 sequence = 4;</code>
      */
     int getSequence();
 
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
     boolean hasReserve();
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
-    int getReserve();
+    java.lang.String getReserve();
+    /**
+     * <code>optional string reserve = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getReserveBytes();
 
     /**
-     * <code>optional string requestMsg = 4;</code>
+     * <code>optional string requestMsg = 6;</code>
      */
     boolean hasRequestMsg();
     /**
-     * <code>optional string requestMsg = 4;</code>
+     * <code>optional string requestMsg = 6;</code>
      */
     java.lang.String getRequestMsg();
     /**
-     * <code>optional string requestMsg = 4;</code>
+     * <code>optional string requestMsg = 6;</code>
      */
     com.google.protobuf.ByteString
         getRequestMsgBytes();
@@ -57,13 +96,108 @@ public final class PVPSerProtocol {
    * Protobuf type {@code SocketRequest}
    */
   public  static final class SocketRequest extends
-      com.google.protobuf.GeneratedMessageLite<
-          SocketRequest, SocketRequest.Builder> implements
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:SocketRequest)
       SocketRequestOrBuilder {
+    // Use SocketRequest.newBuilder() to construct.
+    private SocketRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
     private SocketRequest() {
+      number_ = 0;
+      userId_ = "";
+      roomId_ = "";
+      sequence_ = 0;
+      reserve_ = "";
       requestMsg_ = "";
     }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SocketRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              number_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              userId_ = bs;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              roomId_ = bs;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              sequence_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
+              reserve_ = bs;
+              break;
+            }
+            case 50: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000020;
+              requestMsg_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketRequest_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.class, com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.Builder.class);
+    }
+
     private int bitField0_;
     public static final int NUMBER_FIELD_NUMBER = 1;
     private int number_;
@@ -79,128 +213,210 @@ public final class PVPSerProtocol {
     public int getNumber() {
       return number_;
     }
-    /**
-     * <code>required int32 number = 1;</code>
-     */
-    private void setNumber(int value) {
-      bitField0_ |= 0x00000001;
-      number_ = value;
-    }
-    /**
-     * <code>required int32 number = 1;</code>
-     */
-    private void clearNumber() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      number_ = 0;
-    }
 
-    public static final int SEQUENCE_FIELD_NUMBER = 2;
-    private int sequence_;
+    public static final int USERID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object userId_;
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>required string userId = 2;</code>
      */
-    public boolean hasSequence() {
+    public boolean hasUserId() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>required string userId = 2;</code>
+     */
+    public java.lang.String getUserId() {
+      java.lang.Object ref = userId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          userId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string userId = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUserIdBytes() {
+      java.lang.Object ref = userId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        userId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ROOMID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object roomId_;
+    /**
+     * <code>required string roomId = 3;</code>
+     */
+    public boolean hasRoomId() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required string roomId = 3;</code>
+     */
+    public java.lang.String getRoomId() {
+      java.lang.Object ref = roomId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          roomId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string roomId = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRoomIdBytes() {
+      java.lang.Object ref = roomId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        roomId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SEQUENCE_FIELD_NUMBER = 4;
+    private int sequence_;
+    /**
+     * <code>optional int32 sequence = 4;</code>
+     */
+    public boolean hasSequence() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional int32 sequence = 4;</code>
      */
     public int getSequence() {
       return sequence_;
     }
-    /**
-     * <code>required int32 sequence = 2;</code>
-     */
-    private void setSequence(int value) {
-      bitField0_ |= 0x00000002;
-      sequence_ = value;
-    }
-    /**
-     * <code>required int32 sequence = 2;</code>
-     */
-    private void clearSequence() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      sequence_ = 0;
-    }
 
-    public static final int RESERVE_FIELD_NUMBER = 3;
-    private int reserve_;
+    public static final int RESERVE_FIELD_NUMBER = 5;
+    private volatile java.lang.Object reserve_;
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
     public boolean hasReserve() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
-    public int getReserve() {
-      return reserve_;
+    public java.lang.String getReserve() {
+      java.lang.Object ref = reserve_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          reserve_ = s;
+        }
+        return s;
+      }
     }
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
-    private void setReserve(int value) {
-      bitField0_ |= 0x00000004;
-      reserve_ = value;
-    }
-    /**
-     * <code>optional int32 reserve = 3;</code>
-     */
-    private void clearReserve() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      reserve_ = 0;
+    public com.google.protobuf.ByteString
+        getReserveBytes() {
+      java.lang.Object ref = reserve_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        reserve_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
-    public static final int REQUESTMSG_FIELD_NUMBER = 4;
-    private java.lang.String requestMsg_;
+    public static final int REQUESTMSG_FIELD_NUMBER = 6;
+    private volatile java.lang.Object requestMsg_;
     /**
-     * <code>optional string requestMsg = 4;</code>
+     * <code>optional string requestMsg = 6;</code>
      */
     public boolean hasRequestMsg() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional string requestMsg = 4;</code>
+     * <code>optional string requestMsg = 6;</code>
      */
     public java.lang.String getRequestMsg() {
-      return requestMsg_;
+      java.lang.Object ref = requestMsg_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          requestMsg_ = s;
+        }
+        return s;
+      }
     }
     /**
-     * <code>optional string requestMsg = 4;</code>
+     * <code>optional string requestMsg = 6;</code>
      */
     public com.google.protobuf.ByteString
         getRequestMsgBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(requestMsg_);
+      java.lang.Object ref = requestMsg_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        requestMsg_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
-    /**
-     * <code>optional string requestMsg = 4;</code>
-     */
-    private void setRequestMsg(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-      requestMsg_ = value;
-    }
-    /**
-     * <code>optional string requestMsg = 4;</code>
-     */
-    private void clearRequestMsg() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      requestMsg_ = getDefaultInstance().getRequestMsg();
-    }
-    /**
-     * <code>optional string requestMsg = 4;</code>
-     */
-    private void setRequestMsgBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-      requestMsg_ = value.toStringUtf8();
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasNumber()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasRoomId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
@@ -209,19 +425,25 @@ public final class PVPSerProtocol {
         output.writeInt32(1, number_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(2, sequence_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt32(3, reserve_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, roomId_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeString(4, getRequestMsg());
+        output.writeInt32(4, sequence_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, reserve_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, requestMsg_);
       }
       unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -230,385 +452,805 @@ public final class PVPSerProtocol {
           .computeInt32Size(1, number_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, sequence_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, reserve_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, roomId_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getRequestMsg());
+          .computeInt32Size(4, sequence_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, reserve_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, requestMsg_);
       }
       size += unknownFields.getSerializedSize();
-      memoizedSerializedSize = size;
+      memoizedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest)) {
+        return super.equals(obj);
+      }
+      com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest other = (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest) obj;
+
+      boolean result = true;
+      result = result && (hasNumber() == other.hasNumber());
+      if (hasNumber()) {
+        result = result && (getNumber()
+            == other.getNumber());
+      }
+      result = result && (hasUserId() == other.hasUserId());
+      if (hasUserId()) {
+        result = result && getUserId()
+            .equals(other.getUserId());
+      }
+      result = result && (hasRoomId() == other.hasRoomId());
+      if (hasRoomId()) {
+        result = result && getRoomId()
+            .equals(other.getRoomId());
+      }
+      result = result && (hasSequence() == other.hasSequence());
+      if (hasSequence()) {
+        result = result && (getSequence()
+            == other.getSequence());
+      }
+      result = result && (hasReserve() == other.hasReserve());
+      if (hasReserve()) {
+        result = result && getReserve()
+            .equals(other.getReserve());
+      }
+      result = result && (hasRequestMsg() == other.hasRequestMsg());
+      if (hasRequestMsg()) {
+        result = result && getRequestMsg()
+            .equals(other.getRequestMsg());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (hasNumber()) {
+        hash = (37 * hash) + NUMBER_FIELD_NUMBER;
+        hash = (53 * hash) + getNumber();
+      }
+      if (hasUserId()) {
+        hash = (37 * hash) + USERID_FIELD_NUMBER;
+        hash = (53 * hash) + getUserId().hashCode();
+      }
+      if (hasRoomId()) {
+        hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+        hash = (53 * hash) + getRoomId().hashCode();
+      }
+      if (hasSequence()) {
+        hash = (37 * hash) + SEQUENCE_FIELD_NUMBER;
+        hash = (53 * hash) + getSequence();
+      }
+      if (hasReserve()) {
+        hash = (37 * hash) + RESERVE_FIELD_NUMBER;
+        hash = (53 * hash) + getReserve().hashCode();
+      }
+      if (hasRequestMsg()) {
+        hash = (37 * hash) + REQUESTMSG_FIELD_NUMBER;
+        hash = (53 * hash) + getRequestMsg().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
     }
 
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
     public static Builder newBuilder(com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     /**
      * Protobuf type {@code SocketRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageLite.Builder<
-          com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest, Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:SocketRequest)
         com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequestOrBuilder {
-      // Construct using com.dsky.netty.protocode.PVPSerProtocol.SocketRequest.newBuilder()
-      private Builder() {
-        super(DEFAULT_INSTANCE);
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketRequest_descriptor;
       }
 
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.class, com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.Builder.class);
+      }
 
+      // Construct using com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        number_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        userId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        roomId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        sequence_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        reserve_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        requestMsg_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketRequest_descriptor;
+      }
+
+      public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest getDefaultInstanceForType() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.getDefaultInstance();
+      }
+
+      public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest build() {
+        com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest buildPartial() {
+        com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest result = new com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.number_ = number_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userId_ = userId_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.roomId_ = roomId_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.sequence_ = sequence_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.reserve_ = reserve_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.requestMsg_ = requestMsg_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest) {
+          return mergeFrom((com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest other) {
+        if (other == com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.getDefaultInstance()) return this;
+        if (other.hasNumber()) {
+          setNumber(other.getNumber());
+        }
+        if (other.hasUserId()) {
+          bitField0_ |= 0x00000002;
+          userId_ = other.userId_;
+          onChanged();
+        }
+        if (other.hasRoomId()) {
+          bitField0_ |= 0x00000004;
+          roomId_ = other.roomId_;
+          onChanged();
+        }
+        if (other.hasSequence()) {
+          setSequence(other.getSequence());
+        }
+        if (other.hasReserve()) {
+          bitField0_ |= 0x00000010;
+          reserve_ = other.reserve_;
+          onChanged();
+        }
+        if (other.hasRequestMsg()) {
+          bitField0_ |= 0x00000020;
+          requestMsg_ = other.requestMsg_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasNumber()) {
+          return false;
+        }
+        if (!hasUserId()) {
+          return false;
+        }
+        if (!hasRoomId()) {
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int number_ ;
       /**
        * <code>required int32 number = 1;</code>
        */
       public boolean hasNumber() {
-        return instance.hasNumber();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required int32 number = 1;</code>
        */
       public int getNumber() {
-        return instance.getNumber();
+        return number_;
       }
       /**
        * <code>required int32 number = 1;</code>
        */
       public Builder setNumber(int value) {
-        copyOnWrite();
-        instance.setNumber(value);
+        bitField0_ |= 0x00000001;
+        number_ = value;
+        onChanged();
         return this;
       }
       /**
        * <code>required int32 number = 1;</code>
        */
       public Builder clearNumber() {
-        copyOnWrite();
-        instance.clearNumber();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        number_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object userId_ = "";
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>required string userId = 2;</code>
+       */
+      public boolean hasUserId() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required string userId = 2;</code>
+       */
+      public java.lang.String getUserId() {
+        java.lang.Object ref = userId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            userId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string userId = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUserIdBytes() {
+        java.lang.Object ref = userId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          userId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string userId = 2;</code>
+       */
+      public Builder setUserId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string userId = 2;</code>
+       */
+      public Builder clearUserId() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        userId_ = getDefaultInstance().getUserId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string userId = 2;</code>
+       */
+      public Builder setUserIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object roomId_ = "";
+      /**
+       * <code>required string roomId = 3;</code>
+       */
+      public boolean hasRoomId() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string roomId = 3;</code>
+       */
+      public java.lang.String getRoomId() {
+        java.lang.Object ref = roomId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            roomId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string roomId = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRoomIdBytes() {
+        java.lang.Object ref = roomId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          roomId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string roomId = 3;</code>
+       */
+      public Builder setRoomId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string roomId = 3;</code>
+       */
+      public Builder clearRoomId() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        roomId_ = getDefaultInstance().getRoomId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string roomId = 3;</code>
+       */
+      public Builder setRoomIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int sequence_ ;
+      /**
+       * <code>optional int32 sequence = 4;</code>
        */
       public boolean hasSequence() {
-        return instance.hasSequence();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional int32 sequence = 4;</code>
        */
       public int getSequence() {
-        return instance.getSequence();
+        return sequence_;
       }
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional int32 sequence = 4;</code>
        */
       public Builder setSequence(int value) {
-        copyOnWrite();
-        instance.setSequence(value);
+        bitField0_ |= 0x00000008;
+        sequence_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional int32 sequence = 4;</code>
        */
       public Builder clearSequence() {
-        copyOnWrite();
-        instance.clearSequence();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        sequence_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object reserve_ = "";
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
       public boolean hasReserve() {
-        return instance.hasReserve();
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
-      public int getReserve() {
-        return instance.getReserve();
+      public java.lang.String getReserve() {
+        java.lang.Object ref = reserve_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            reserve_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
-      public Builder setReserve(int value) {
-        copyOnWrite();
-        instance.setReserve(value);
+      public com.google.protobuf.ByteString
+          getReserveBytes() {
+        java.lang.Object ref = reserve_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          reserve_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string reserve = 5;</code>
+       */
+      public Builder setReserve(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        reserve_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
       public Builder clearReserve() {
-        copyOnWrite();
-        instance.clearReserve();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        reserve_ = getDefaultInstance().getReserve();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string reserve = 5;</code>
+       */
+      public Builder setReserveBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        reserve_ = value;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object requestMsg_ = "";
       /**
-       * <code>optional string requestMsg = 4;</code>
+       * <code>optional string requestMsg = 6;</code>
        */
       public boolean hasRequestMsg() {
-        return instance.hasRequestMsg();
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional string requestMsg = 4;</code>
+       * <code>optional string requestMsg = 6;</code>
        */
       public java.lang.String getRequestMsg() {
-        return instance.getRequestMsg();
+        java.lang.Object ref = requestMsg_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            requestMsg_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>optional string requestMsg = 4;</code>
+       * <code>optional string requestMsg = 6;</code>
        */
       public com.google.protobuf.ByteString
           getRequestMsgBytes() {
-        return instance.getRequestMsgBytes();
+        java.lang.Object ref = requestMsg_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          requestMsg_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
-       * <code>optional string requestMsg = 4;</code>
+       * <code>optional string requestMsg = 6;</code>
        */
       public Builder setRequestMsg(
           java.lang.String value) {
-        copyOnWrite();
-        instance.setRequestMsg(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        requestMsg_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>optional string requestMsg = 4;</code>
+       * <code>optional string requestMsg = 6;</code>
        */
       public Builder clearRequestMsg() {
-        copyOnWrite();
-        instance.clearRequestMsg();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        requestMsg_ = getDefaultInstance().getRequestMsg();
+        onChanged();
         return this;
       }
       /**
-       * <code>optional string requestMsg = 4;</code>
+       * <code>optional string requestMsg = 6;</code>
        */
       public Builder setRequestMsgBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setRequestMsgBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        requestMsg_ = value;
+        onChanged();
         return this;
       }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
 
       // @@protoc_insertion_point(builder_scope:SocketRequest)
     }
-    private byte memoizedIsInitialized = -1;
-    protected final Object dynamicMethod(
-        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        Object arg0, Object arg1) {
-      switch (method) {
-        case NEW_MUTABLE_INSTANCE: {
-          return new com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest();
-        }
-        case IS_INITIALIZED: {
-          byte isInitialized = memoizedIsInitialized;
-          if (isInitialized == 1) return DEFAULT_INSTANCE;
-          if (isInitialized == 0) return null;
-
-          boolean shouldMemoize = ((Boolean) arg0).booleanValue();
-          if (!hasNumber()) {
-            if (shouldMemoize) {
-              memoizedIsInitialized = 0;
-            }
-            return null;
-          }
-          if (!hasSequence()) {
-            if (shouldMemoize) {
-              memoizedIsInitialized = 0;
-            }
-            return null;
-          }
-          if (shouldMemoize) memoizedIsInitialized = 1;
-          return DEFAULT_INSTANCE;
-
-        }
-        case MAKE_IMMUTABLE: {
-          return null;
-        }
-        case NEW_BUILDER: {
-          return new Builder();
-        }
-        case VISIT: {
-          Visitor visitor = (Visitor) arg0;
-          com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest other = (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest) arg1;
-          number_ = visitor.visitInt(
-              hasNumber(), number_,
-              other.hasNumber(), other.number_);
-          sequence_ = visitor.visitInt(
-              hasSequence(), sequence_,
-              other.hasSequence(), other.sequence_);
-          reserve_ = visitor.visitInt(
-              hasReserve(), reserve_,
-              other.hasReserve(), other.reserve_);
-          requestMsg_ = visitor.visitString(
-              hasRequestMsg(), requestMsg_,
-              other.hasRequestMsg(), other.requestMsg_);
-          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-              .INSTANCE) {
-            bitField0_ |= other.bitField0_;
-          }
-          return this;
-        }
-        case MERGE_FROM_STREAM: {
-          com.google.protobuf.CodedInputStream input =
-              (com.google.protobuf.CodedInputStream) arg0;
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-              (com.google.protobuf.ExtensionRegistryLite) arg1;
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                default: {
-                  if (!parseUnknownField(tag, input)) {
-                    done = true;
-                  }
-                  break;
-                }
-                case 8: {
-                  bitField0_ |= 0x00000001;
-                  number_ = input.readInt32();
-                  break;
-                }
-                case 16: {
-                  bitField0_ |= 0x00000002;
-                  sequence_ = input.readInt32();
-                  break;
-                }
-                case 24: {
-                  bitField0_ |= 0x00000004;
-                  reserve_ = input.readInt32();
-                  break;
-                }
-                case 34: {
-                  String s = input.readString();
-                  bitField0_ |= 0x00000008;
-                  requestMsg_ = s;
-                  break;
-                }
-              }
-            }
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw new RuntimeException(e.setUnfinishedMessage(this));
-          } catch (java.io.IOException e) {
-            throw new RuntimeException(
-                new com.google.protobuf.InvalidProtocolBufferException(
-                    e.getMessage()).setUnfinishedMessage(this));
-          } finally {
-          }
-        }
-        case GET_DEFAULT_INSTANCE: {
-          return DEFAULT_INSTANCE;
-        }
-        case GET_PARSER: {
-          if (PARSER == null) {    synchronized (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest.class) {
-              if (PARSER == null) {
-                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-              }
-            }
-          }
-          return PARSER;
-        }
-      }
-      throw new UnsupportedOperationException();
-    }
-
 
     // @@protoc_insertion_point(class_scope:SocketRequest)
     private static final com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new SocketRequest();
-      DEFAULT_INSTANCE.makeImmutable();
+      DEFAULT_INSTANCE = new com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest();
     }
 
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static volatile com.google.protobuf.Parser<SocketRequest> PARSER;
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<SocketRequest>
+        PARSER = new com.google.protobuf.AbstractParser<SocketRequest>() {
+      public SocketRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new SocketRequest(input, extensionRegistry);
+      }
+    };
 
     public static com.google.protobuf.Parser<SocketRequest> parser() {
-      return DEFAULT_INSTANCE.getParserForType();
+      return PARSER;
     }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SocketRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
   public interface SocketResponseOrBuilder extends
       // @@protoc_insertion_point(interface_extends:SocketResponse)
-      com.google.protobuf.MessageLiteOrBuilder {
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>required int32 number = 1;</code>
@@ -620,33 +1262,66 @@ public final class PVPSerProtocol {
     int getNumber();
 
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>optional string userId = 2;</code>
+     */
+    boolean hasUserId();
+    /**
+     * <code>optional string userId = 2;</code>
+     */
+    java.lang.String getUserId();
+    /**
+     * <code>optional string userId = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getUserIdBytes();
+
+    /**
+     * <code>optional string roomId = 3;</code>
+     */
+    boolean hasRoomId();
+    /**
+     * <code>optional string roomId = 3;</code>
+     */
+    java.lang.String getRoomId();
+    /**
+     * <code>optional string roomId = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getRoomIdBytes();
+
+    /**
+     * <code>optional int32 sequence = 4;</code>
      */
     boolean hasSequence();
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>optional int32 sequence = 4;</code>
      */
     int getSequence();
 
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
     boolean hasReserve();
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
-    int getReserve();
+    java.lang.String getReserve();
+    /**
+     * <code>optional string reserve = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getReserveBytes();
 
     /**
-     * <code>optional string responseMsg = 4;</code>
+     * <code>optional string responseMsg = 6;</code>
      */
     boolean hasResponseMsg();
     /**
-     * <code>optional string responseMsg = 4;</code>
+     * <code>optional string responseMsg = 6;</code>
      */
     java.lang.String getResponseMsg();
     /**
-     * <code>optional string responseMsg = 4;</code>
+     * <code>optional string responseMsg = 6;</code>
      */
     com.google.protobuf.ByteString
         getResponseMsgBytes();
@@ -655,13 +1330,108 @@ public final class PVPSerProtocol {
    * Protobuf type {@code SocketResponse}
    */
   public  static final class SocketResponse extends
-      com.google.protobuf.GeneratedMessageLite<
-          SocketResponse, SocketResponse.Builder> implements
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:SocketResponse)
       SocketResponseOrBuilder {
+    // Use SocketResponse.newBuilder() to construct.
+    private SocketResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
     private SocketResponse() {
+      number_ = 0;
+      userId_ = "";
+      roomId_ = "";
+      sequence_ = 0;
+      reserve_ = "";
       responseMsg_ = "";
     }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SocketResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              number_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              userId_ = bs;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              roomId_ = bs;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              sequence_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
+              reserve_ = bs;
+              break;
+            }
+            case 50: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000020;
+              responseMsg_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketResponse_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.class, com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.Builder.class);
+    }
+
     private int bitField0_;
     public static final int NUMBER_FIELD_NUMBER = 1;
     private int number_;
@@ -677,128 +1447,202 @@ public final class PVPSerProtocol {
     public int getNumber() {
       return number_;
     }
-    /**
-     * <code>required int32 number = 1;</code>
-     */
-    private void setNumber(int value) {
-      bitField0_ |= 0x00000001;
-      number_ = value;
-    }
-    /**
-     * <code>required int32 number = 1;</code>
-     */
-    private void clearNumber() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      number_ = 0;
-    }
 
-    public static final int SEQUENCE_FIELD_NUMBER = 2;
-    private int sequence_;
+    public static final int USERID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object userId_;
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>optional string userId = 2;</code>
      */
-    public boolean hasSequence() {
+    public boolean hasUserId() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 sequence = 2;</code>
+     * <code>optional string userId = 2;</code>
+     */
+    public java.lang.String getUserId() {
+      java.lang.Object ref = userId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          userId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string userId = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUserIdBytes() {
+      java.lang.Object ref = userId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        userId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ROOMID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object roomId_;
+    /**
+     * <code>optional string roomId = 3;</code>
+     */
+    public boolean hasRoomId() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string roomId = 3;</code>
+     */
+    public java.lang.String getRoomId() {
+      java.lang.Object ref = roomId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          roomId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string roomId = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRoomIdBytes() {
+      java.lang.Object ref = roomId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        roomId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SEQUENCE_FIELD_NUMBER = 4;
+    private int sequence_;
+    /**
+     * <code>optional int32 sequence = 4;</code>
+     */
+    public boolean hasSequence() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional int32 sequence = 4;</code>
      */
     public int getSequence() {
       return sequence_;
     }
-    /**
-     * <code>required int32 sequence = 2;</code>
-     */
-    private void setSequence(int value) {
-      bitField0_ |= 0x00000002;
-      sequence_ = value;
-    }
-    /**
-     * <code>required int32 sequence = 2;</code>
-     */
-    private void clearSequence() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      sequence_ = 0;
-    }
 
-    public static final int RESERVE_FIELD_NUMBER = 3;
-    private int reserve_;
+    public static final int RESERVE_FIELD_NUMBER = 5;
+    private volatile java.lang.Object reserve_;
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
     public boolean hasReserve() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
-    public int getReserve() {
-      return reserve_;
+    public java.lang.String getReserve() {
+      java.lang.Object ref = reserve_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          reserve_ = s;
+        }
+        return s;
+      }
     }
     /**
-     * <code>optional int32 reserve = 3;</code>
+     * <code>optional string reserve = 5;</code>
      */
-    private void setReserve(int value) {
-      bitField0_ |= 0x00000004;
-      reserve_ = value;
-    }
-    /**
-     * <code>optional int32 reserve = 3;</code>
-     */
-    private void clearReserve() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      reserve_ = 0;
+    public com.google.protobuf.ByteString
+        getReserveBytes() {
+      java.lang.Object ref = reserve_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        reserve_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
-    public static final int RESPONSEMSG_FIELD_NUMBER = 4;
-    private java.lang.String responseMsg_;
+    public static final int RESPONSEMSG_FIELD_NUMBER = 6;
+    private volatile java.lang.Object responseMsg_;
     /**
-     * <code>optional string responseMsg = 4;</code>
+     * <code>optional string responseMsg = 6;</code>
      */
     public boolean hasResponseMsg() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional string responseMsg = 4;</code>
+     * <code>optional string responseMsg = 6;</code>
      */
     public java.lang.String getResponseMsg() {
-      return responseMsg_;
+      java.lang.Object ref = responseMsg_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          responseMsg_ = s;
+        }
+        return s;
+      }
     }
     /**
-     * <code>optional string responseMsg = 4;</code>
+     * <code>optional string responseMsg = 6;</code>
      */
     public com.google.protobuf.ByteString
         getResponseMsgBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(responseMsg_);
+      java.lang.Object ref = responseMsg_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        responseMsg_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
-    /**
-     * <code>optional string responseMsg = 4;</code>
-     */
-    private void setResponseMsg(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-      responseMsg_ = value;
-    }
-    /**
-     * <code>optional string responseMsg = 4;</code>
-     */
-    private void clearResponseMsg() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      responseMsg_ = getDefaultInstance().getResponseMsg();
-    }
-    /**
-     * <code>optional string responseMsg = 4;</code>
-     */
-    private void setResponseMsgBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-      responseMsg_ = value.toStringUtf8();
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasNumber()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
@@ -807,19 +1651,25 @@ public final class PVPSerProtocol {
         output.writeInt32(1, number_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(2, sequence_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt32(3, reserve_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, roomId_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeString(4, getResponseMsg());
+        output.writeInt32(4, sequence_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, reserve_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, responseMsg_);
       }
       unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -828,384 +1678,849 @@ public final class PVPSerProtocol {
           .computeInt32Size(1, number_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, sequence_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, reserve_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, roomId_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getResponseMsg());
+          .computeInt32Size(4, sequence_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, reserve_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, responseMsg_);
       }
       size += unknownFields.getSerializedSize();
-      memoizedSerializedSize = size;
+      memoizedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse)) {
+        return super.equals(obj);
+      }
+      com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse other = (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse) obj;
+
+      boolean result = true;
+      result = result && (hasNumber() == other.hasNumber());
+      if (hasNumber()) {
+        result = result && (getNumber()
+            == other.getNumber());
+      }
+      result = result && (hasUserId() == other.hasUserId());
+      if (hasUserId()) {
+        result = result && getUserId()
+            .equals(other.getUserId());
+      }
+      result = result && (hasRoomId() == other.hasRoomId());
+      if (hasRoomId()) {
+        result = result && getRoomId()
+            .equals(other.getRoomId());
+      }
+      result = result && (hasSequence() == other.hasSequence());
+      if (hasSequence()) {
+        result = result && (getSequence()
+            == other.getSequence());
+      }
+      result = result && (hasReserve() == other.hasReserve());
+      if (hasReserve()) {
+        result = result && getReserve()
+            .equals(other.getReserve());
+      }
+      result = result && (hasResponseMsg() == other.hasResponseMsg());
+      if (hasResponseMsg()) {
+        result = result && getResponseMsg()
+            .equals(other.getResponseMsg());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (hasNumber()) {
+        hash = (37 * hash) + NUMBER_FIELD_NUMBER;
+        hash = (53 * hash) + getNumber();
+      }
+      if (hasUserId()) {
+        hash = (37 * hash) + USERID_FIELD_NUMBER;
+        hash = (53 * hash) + getUserId().hashCode();
+      }
+      if (hasRoomId()) {
+        hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+        hash = (53 * hash) + getRoomId().hashCode();
+      }
+      if (hasSequence()) {
+        hash = (37 * hash) + SEQUENCE_FIELD_NUMBER;
+        hash = (53 * hash) + getSequence();
+      }
+      if (hasReserve()) {
+        hash = (37 * hash) + RESERVE_FIELD_NUMBER;
+        hash = (53 * hash) + getReserve().hashCode();
+      }
+      if (hasResponseMsg()) {
+        hash = (37 * hash) + RESPONSEMSG_FIELD_NUMBER;
+        hash = (53 * hash) + getResponseMsg().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
     }
 
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
     public static Builder newBuilder(com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     /**
      * Protobuf type {@code SocketResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageLite.Builder<
-          com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse, Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:SocketResponse)
         com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponseOrBuilder {
-      // Construct using com.dsky.netty.protocode.PVPSerProtocol.SocketResponse.newBuilder()
-      private Builder() {
-        super(DEFAULT_INSTANCE);
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketResponse_descriptor;
       }
 
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.class, com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.Builder.class);
+      }
 
+      // Construct using com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        number_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        userId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        roomId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        sequence_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        reserve_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        responseMsg_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.internal_static_SocketResponse_descriptor;
+      }
+
+      public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse getDefaultInstanceForType() {
+        return com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.getDefaultInstance();
+      }
+
+      public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse build() {
+        com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse buildPartial() {
+        com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse result = new com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.number_ = number_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userId_ = userId_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.roomId_ = roomId_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.sequence_ = sequence_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.reserve_ = reserve_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.responseMsg_ = responseMsg_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse) {
+          return mergeFrom((com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse other) {
+        if (other == com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.getDefaultInstance()) return this;
+        if (other.hasNumber()) {
+          setNumber(other.getNumber());
+        }
+        if (other.hasUserId()) {
+          bitField0_ |= 0x00000002;
+          userId_ = other.userId_;
+          onChanged();
+        }
+        if (other.hasRoomId()) {
+          bitField0_ |= 0x00000004;
+          roomId_ = other.roomId_;
+          onChanged();
+        }
+        if (other.hasSequence()) {
+          setSequence(other.getSequence());
+        }
+        if (other.hasReserve()) {
+          bitField0_ |= 0x00000010;
+          reserve_ = other.reserve_;
+          onChanged();
+        }
+        if (other.hasResponseMsg()) {
+          bitField0_ |= 0x00000020;
+          responseMsg_ = other.responseMsg_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasNumber()) {
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int number_ ;
       /**
        * <code>required int32 number = 1;</code>
        */
       public boolean hasNumber() {
-        return instance.hasNumber();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required int32 number = 1;</code>
        */
       public int getNumber() {
-        return instance.getNumber();
+        return number_;
       }
       /**
        * <code>required int32 number = 1;</code>
        */
       public Builder setNumber(int value) {
-        copyOnWrite();
-        instance.setNumber(value);
+        bitField0_ |= 0x00000001;
+        number_ = value;
+        onChanged();
         return this;
       }
       /**
        * <code>required int32 number = 1;</code>
        */
       public Builder clearNumber() {
-        copyOnWrite();
-        instance.clearNumber();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        number_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object userId_ = "";
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional string userId = 2;</code>
+       */
+      public boolean hasUserId() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string userId = 2;</code>
+       */
+      public java.lang.String getUserId() {
+        java.lang.Object ref = userId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            userId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string userId = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUserIdBytes() {
+        java.lang.Object ref = userId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          userId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string userId = 2;</code>
+       */
+      public Builder setUserId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string userId = 2;</code>
+       */
+      public Builder clearUserId() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        userId_ = getDefaultInstance().getUserId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string userId = 2;</code>
+       */
+      public Builder setUserIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object roomId_ = "";
+      /**
+       * <code>optional string roomId = 3;</code>
+       */
+      public boolean hasRoomId() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string roomId = 3;</code>
+       */
+      public java.lang.String getRoomId() {
+        java.lang.Object ref = roomId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            roomId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string roomId = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRoomIdBytes() {
+        java.lang.Object ref = roomId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          roomId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string roomId = 3;</code>
+       */
+      public Builder setRoomId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string roomId = 3;</code>
+       */
+      public Builder clearRoomId() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        roomId_ = getDefaultInstance().getRoomId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string roomId = 3;</code>
+       */
+      public Builder setRoomIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int sequence_ ;
+      /**
+       * <code>optional int32 sequence = 4;</code>
        */
       public boolean hasSequence() {
-        return instance.hasSequence();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional int32 sequence = 4;</code>
        */
       public int getSequence() {
-        return instance.getSequence();
+        return sequence_;
       }
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional int32 sequence = 4;</code>
        */
       public Builder setSequence(int value) {
-        copyOnWrite();
-        instance.setSequence(value);
+        bitField0_ |= 0x00000008;
+        sequence_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>required int32 sequence = 2;</code>
+       * <code>optional int32 sequence = 4;</code>
        */
       public Builder clearSequence() {
-        copyOnWrite();
-        instance.clearSequence();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        sequence_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object reserve_ = "";
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
       public boolean hasReserve() {
-        return instance.hasReserve();
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
-      public int getReserve() {
-        return instance.getReserve();
+      public java.lang.String getReserve() {
+        java.lang.Object ref = reserve_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            reserve_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
-      public Builder setReserve(int value) {
-        copyOnWrite();
-        instance.setReserve(value);
+      public com.google.protobuf.ByteString
+          getReserveBytes() {
+        java.lang.Object ref = reserve_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          reserve_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string reserve = 5;</code>
+       */
+      public Builder setReserve(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        reserve_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>optional int32 reserve = 3;</code>
+       * <code>optional string reserve = 5;</code>
        */
       public Builder clearReserve() {
-        copyOnWrite();
-        instance.clearReserve();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        reserve_ = getDefaultInstance().getReserve();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string reserve = 5;</code>
+       */
+      public Builder setReserveBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        reserve_ = value;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object responseMsg_ = "";
       /**
-       * <code>optional string responseMsg = 4;</code>
+       * <code>optional string responseMsg = 6;</code>
        */
       public boolean hasResponseMsg() {
-        return instance.hasResponseMsg();
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional string responseMsg = 4;</code>
+       * <code>optional string responseMsg = 6;</code>
        */
       public java.lang.String getResponseMsg() {
-        return instance.getResponseMsg();
+        java.lang.Object ref = responseMsg_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            responseMsg_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>optional string responseMsg = 4;</code>
+       * <code>optional string responseMsg = 6;</code>
        */
       public com.google.protobuf.ByteString
           getResponseMsgBytes() {
-        return instance.getResponseMsgBytes();
+        java.lang.Object ref = responseMsg_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          responseMsg_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
-       * <code>optional string responseMsg = 4;</code>
+       * <code>optional string responseMsg = 6;</code>
        */
       public Builder setResponseMsg(
           java.lang.String value) {
-        copyOnWrite();
-        instance.setResponseMsg(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        responseMsg_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>optional string responseMsg = 4;</code>
+       * <code>optional string responseMsg = 6;</code>
        */
       public Builder clearResponseMsg() {
-        copyOnWrite();
-        instance.clearResponseMsg();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        responseMsg_ = getDefaultInstance().getResponseMsg();
+        onChanged();
         return this;
       }
       /**
-       * <code>optional string responseMsg = 4;</code>
+       * <code>optional string responseMsg = 6;</code>
        */
       public Builder setResponseMsgBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setResponseMsgBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        responseMsg_ = value;
+        onChanged();
         return this;
       }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
 
       // @@protoc_insertion_point(builder_scope:SocketResponse)
     }
-    private byte memoizedIsInitialized = -1;
-    protected final Object dynamicMethod(
-        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        Object arg0, Object arg1) {
-      switch (method) {
-        case NEW_MUTABLE_INSTANCE: {
-          return new com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse();
-        }
-        case IS_INITIALIZED: {
-          byte isInitialized = memoizedIsInitialized;
-          if (isInitialized == 1) return DEFAULT_INSTANCE;
-          if (isInitialized == 0) return null;
-
-          boolean shouldMemoize = ((Boolean) arg0).booleanValue();
-          if (!hasNumber()) {
-            if (shouldMemoize) {
-              memoizedIsInitialized = 0;
-            }
-            return null;
-          }
-          if (!hasSequence()) {
-            if (shouldMemoize) {
-              memoizedIsInitialized = 0;
-            }
-            return null;
-          }
-          if (shouldMemoize) memoizedIsInitialized = 1;
-          return DEFAULT_INSTANCE;
-
-        }
-        case MAKE_IMMUTABLE: {
-          return null;
-        }
-        case NEW_BUILDER: {
-          return new Builder();
-        }
-        case VISIT: {
-          Visitor visitor = (Visitor) arg0;
-          com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse other = (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse) arg1;
-          number_ = visitor.visitInt(
-              hasNumber(), number_,
-              other.hasNumber(), other.number_);
-          sequence_ = visitor.visitInt(
-              hasSequence(), sequence_,
-              other.hasSequence(), other.sequence_);
-          reserve_ = visitor.visitInt(
-              hasReserve(), reserve_,
-              other.hasReserve(), other.reserve_);
-          responseMsg_ = visitor.visitString(
-              hasResponseMsg(), responseMsg_,
-              other.hasResponseMsg(), other.responseMsg_);
-          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-              .INSTANCE) {
-            bitField0_ |= other.bitField0_;
-          }
-          return this;
-        }
-        case MERGE_FROM_STREAM: {
-          com.google.protobuf.CodedInputStream input =
-              (com.google.protobuf.CodedInputStream) arg0;
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-              (com.google.protobuf.ExtensionRegistryLite) arg1;
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                default: {
-                  if (!parseUnknownField(tag, input)) {
-                    done = true;
-                  }
-                  break;
-                }
-                case 8: {
-                  bitField0_ |= 0x00000001;
-                  number_ = input.readInt32();
-                  break;
-                }
-                case 16: {
-                  bitField0_ |= 0x00000002;
-                  sequence_ = input.readInt32();
-                  break;
-                }
-                case 24: {
-                  bitField0_ |= 0x00000004;
-                  reserve_ = input.readInt32();
-                  break;
-                }
-                case 34: {
-                  String s = input.readString();
-                  bitField0_ |= 0x00000008;
-                  responseMsg_ = s;
-                  break;
-                }
-              }
-            }
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw new RuntimeException(e.setUnfinishedMessage(this));
-          } catch (java.io.IOException e) {
-            throw new RuntimeException(
-                new com.google.protobuf.InvalidProtocolBufferException(
-                    e.getMessage()).setUnfinishedMessage(this));
-          } finally {
-          }
-        }
-        case GET_DEFAULT_INSTANCE: {
-          return DEFAULT_INSTANCE;
-        }
-        case GET_PARSER: {
-          if (PARSER == null) {    synchronized (com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse.class) {
-              if (PARSER == null) {
-                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-              }
-            }
-          }
-          return PARSER;
-        }
-      }
-      throw new UnsupportedOperationException();
-    }
-
 
     // @@protoc_insertion_point(class_scope:SocketResponse)
     private static final com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new SocketResponse();
-      DEFAULT_INSTANCE.makeImmutable();
+      DEFAULT_INSTANCE = new com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse();
     }
 
     public static com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static volatile com.google.protobuf.Parser<SocketResponse> PARSER;
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<SocketResponse>
+        PARSER = new com.google.protobuf.AbstractParser<SocketResponse>() {
+      public SocketResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new SocketResponse(input, extensionRegistry);
+      }
+    };
 
     public static com.google.protobuf.Parser<SocketResponse> parser() {
-      return DEFAULT_INSTANCE.getParserForType();
+      return PARSER;
     }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SocketResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_SocketRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_SocketRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_SocketResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_SocketResponse_fieldAccessorTable;
 
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
+    java.lang.String[] descriptorData = {
+      "\n\032proto/PVPSerProtocol.proto\"v\n\rSocketRe" +
+      "quest\022\016\n\006number\030\001 \002(\005\022\016\n\006userId\030\002 \002(\t\022\016\n" +
+      "\006roomId\030\003 \002(\t\022\020\n\010sequence\030\004 \001(\005\022\017\n\007reser" +
+      "ve\030\005 \001(\t\022\022\n\nrequestMsg\030\006 \001(\t\"x\n\016SocketRe" +
+      "sponse\022\016\n\006number\030\001 \002(\005\022\016\n\006userId\030\002 \001(\t\022\016" +
+      "\n\006roomId\030\003 \001(\t\022\020\n\010sequence\030\004 \001(\005\022\017\n\007rese" +
+      "rve\030\005 \001(\t\022\023\n\013responseMsg\030\006 \001(\tB1\n\037com.ds" +
+      "ky.netty.pvpser.protocodeB\016PVPSerProtoco" +
+      "l"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        }, assigner);
+    internal_static_SocketRequest_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_SocketRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_SocketRequest_descriptor,
+        new java.lang.String[] { "Number", "UserId", "RoomId", "Sequence", "Reserve", "RequestMsg", });
+    internal_static_SocketResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_SocketResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_SocketResponse_descriptor,
+        new java.lang.String[] { "Number", "UserId", "RoomId", "Sequence", "Reserve", "ResponseMsg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

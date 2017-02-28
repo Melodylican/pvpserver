@@ -1,0 +1,20 @@
+option java_package = "com.dsky.netty.pvpser.protocode";
+option java_outer_classname = "PVPSerProtocol";
+
+message SocketRequest {
+  required int32 number = 1; #对应ProtocolCode.java中指令代码
+  required string userId = 2;#发送请求者的用户ID
+  optional string roomId = 3;#房间号
+  optional int32 sequence = 4;#序列号
+  optional string reserve = 5;#备用字段
+  optional string requestMsg = 6;#包含具体信息的json字符串
+}
+
+message SocketResponse {
+  required int32 number = 1;#对应ProtocolCode.java中指令代码
+  optional string userId = 2;#对相应用户的请求响应
+  optional string roomId = 3;#房间号
+  optional int32 sequence = 4;#序列号
+  optional string reserve = 5;#备用字段
+  optional string responseMsg = 6;#数据信息json
+}

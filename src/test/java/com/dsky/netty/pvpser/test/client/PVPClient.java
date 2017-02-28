@@ -32,7 +32,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class PVPClient {
 	static final String HOST = System.getProperty("host","127.0.0.1");
 	static final int PORT = Integer.parseInt(System.getProperty("port","9000"));
-	
+
 	
 	public static void main(String[] args) throws InterruptedException {
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -50,6 +50,8 @@ public class PVPClient {
 			SocketRequest.Builder req = SocketRequest.newBuilder();
 			req.setNumber(ProtocolCode.SYSTEM_UPLOAD_HEARTBEAT);
 			req.setSequence(0);
+			req.setUserId("123456");
+			req.setRoomId("13256431");
 			req.setRequestMsg("{\"roomId\":154321321,\"userId\":123456,\"data\":\"sdfdsfdsfdsvdsfdsfdsfdscvdsfdsfdsfds\",\"roomCreatetime\":1321456421,\"numbers\":3}");
 
 			// 发送请求

@@ -7,8 +7,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 /**
  * MyBatis工具类
  *
- * @author lee
- *         2015-2-6
  */
 public class MyBatisUtil {
 
@@ -39,7 +37,6 @@ public class MyBatisUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return sqlSession;
     }
 
