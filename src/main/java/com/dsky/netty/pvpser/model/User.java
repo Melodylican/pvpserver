@@ -25,13 +25,16 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	//用户Id
 	private String userId;
-	//用户当前状态
-	private int userStatus;
-	//用户当前最新的游戏数据
-	private String data;
-	public User(String userId,String data) {
+	//用户当前状态 [0 无状态,1 准备状态,2 游戏中, 3 游戏结束 , 4 退出房间状态, 5 掉线状态]
+	private int userStatus; 
+	//用户当前最新的游戏数据(指令等)
+	private String gameData;
+	//用户当前的状态(用户当前积分等)
+	private String userData;
+	public User(String userId, String gameData, String userData) {
 		this.userId = userId;
-		this.data = data;
+		this.gameData = gameData;
+		this.userData = userData;
 	}
 	public String getUserId() {
 		return userId;
@@ -39,21 +42,28 @@ public class User implements Serializable{
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getData() {
-		return data;
-	}
-	public void setData(String data) {
-		this.data = data;
-	}
 	public int getUserStatus() {
 		return userStatus;
 	}
 	public void setUserStatus(int userStatus) {
 		this.userStatus = userStatus;
 	}
+	public String getGameData() {
+		return gameData;
+	}
+	public void setGameData(String gameData) {
+		this.gameData = gameData;
+	}
+	public String getUserData() {
+		return userData;
+	}
+	public void setUserData(String userData) {
+		this.userData = userData;
+	}
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userStatus=" + userStatus
-				+ ", data=" + data + "]";
+				+ ", gameData=" + gameData + ", userData=" + userData + "]";
 	}
+
 }

@@ -10,6 +10,7 @@ package com.dsky.netty.pvpser.server;
 
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
 import com.dsky.netty.pvpser.common.ProtocolCode;
 import com.dsky.netty.pvpser.dispatch.RoomDispatch;
 import com.dsky.netty.pvpser.dispatch.SystemDispatch;
@@ -49,18 +50,13 @@ public class PVPProtocolServerHandler extends
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx,
 			SocketRequest request) throws Exception {
-		/*
-		 * SocketResponse.Builder builder = SocketResponse.newBuilder();
-		 * builder.setResponseMsg("Accepted from Server, returning response")
-		 * .setRet(0); ctx.write(builder.build());
-		 */
+
 		logger.debug("channel read: " + request.toString());
-		System.out.println("channel read: " + request.toString());
+		//System.out.println("channel read: " + request.toString());
 		// 按照协议规定分发客户端请求到相应的处理逻辑
 		if (request.getNumber() >= ProtocolCode.ROOM_MIN
 				&& request.getNumber() <= ProtocolCode.ROOM_MAX) {
-			System.out.println("[Server] -- 客户端请求的服务代码为： ["
-					+ request.getNumber() + "]");
+			//System.out.println("[Server] -- 客户端请求的服务代码为： ["+ request.getNumber() + "]");
 			RoomDispatch.dispatch(ctx, request);
 		} else if (request.getNumber() >= ProtocolCode.SYSTEM_MIN
 				&& request.getNumber() <= ProtocolCode.SYSTEM_MAX) {
@@ -75,17 +71,19 @@ public class PVPProtocolServerHandler extends
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception // 当客户端连上服务器的时候会触发此函数
 	{
-		System.out.println("client:" + ctx.channel().id() + " join server");
-		SocketManager.getDefaultStore().add("123", ctx);
-		
-		/*
-		SocketResponse.Builder socket = SocketResponse.newBuilder();
-		socket.setNumber(ProtocolCode.EXIT_ROOM);
-		socket.setSequence(0);
-		socket.setResponseMsg("sdlfjdlsfjdlsfkj");
-		ctx.channel().writeAndFlush(socket);
-		*/
-		logger.info("clinet:" + ctx.channel().id() + " join server");
+		//System.out.println("client:" + ctx.channel().id() + " join server");
+		//SocketManager.getDefaultStore().add("123", ctx);
+
+		///*
+		SocketRequest.Builder response = SocketRequest.newBuilder();
+		response.setNumber(ProtocolCode.BROADCAST_CREATE_ROOM);
+		response.setRequestMsg("4513212122");// 将对象数组转成json字符串
+		response.setRoomId("1321321");
+		response.setUserId("2321321");
+		//System.out.println("[Server] -- 客户端请求加入房间成功");
+		ctx.writeAndFlush(response.build());
+		//*/
+		//logger.info("clinet:" + ctx.channel().id() + " join server");
 	}
 
 	// 通道断开时做出的响应写这里
@@ -93,7 +91,7 @@ public class PVPProtocolServerHandler extends
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception// 当客户端断开连接的时候触发函数
 	{
 		System.out.println("client:" + ctx.channel().id() + " leave server");
-		logger.info("client:" + ctx.channel().id() + " leave server");
+		//logger.info("client:" + ctx.channel().id() + " leave server");
 		// User.onlineUser.remove(LoginDispatch.getInstance().user);
 	}
 }

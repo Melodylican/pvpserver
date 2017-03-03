@@ -74,7 +74,7 @@ public class PVPClientSingleton {
 					return null;
 				else {
 					System.out.println("Got reponse msg from Server : "+resp.getResponseMsg());
-					c.close();
+					//c.close();
 					return resp;
 				}
 			}

@@ -38,8 +38,10 @@ public class Room implements Serializable{
 	private int currentNumber;
 	//房间成员
 	private Map<String,User> member;
-	//房间状态
+	//房间状态 [0 匹配中 , 1 匹配成功状态 , 2 等待开始状态 , 3 游戏中 , 4 游戏结束 , 5 房间解散状态 ]
 	private int roomStatus;
+	//一局游戏的时长设定 单位为 s
+	private int time;
 	
 	public String getRoomId() {
 		return roomId;
@@ -89,11 +91,18 @@ public class Room implements Serializable{
 	public String getRoomOwner() {
 		return roomOwner;
 	}
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", roomCreatetime=" + roomCreatetime
 				+ ", roomDeltime=" + roomDeltime + ", roomOwner=" + roomOwner
 				+ ", numbers=" + numbers + ", currentNumber=" + currentNumber
-				+ ", member=" + member + ", roomStatus=" + roomStatus + "]";
+				+ ", member=" + member + ", roomStatus=" + roomStatus
+				+ ", time=" + time + "]";
 	}
 }

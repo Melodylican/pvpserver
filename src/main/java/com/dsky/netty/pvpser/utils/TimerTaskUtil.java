@@ -8,9 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 全局定时任务工具类
- *
- * @author lee
- *         2015-2-6
+
  */
 public class TimerTaskUtil {
 

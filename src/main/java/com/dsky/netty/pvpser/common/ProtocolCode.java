@@ -11,26 +11,49 @@ package com.dsky.netty.pvpser.common;
  * @版本：V1.0
  */
 public class ProtocolCode {
+	//客户端发起操作的命令代码：
 	public static final int ROOM_MIN = 2000;
 
-    public static final int JOIN_ROOM = 2000; //申请加入一个房间  //消息体中包含 自身用户ID以及加入的房间号
+    public static final int JOIN_ROOM = 2000; //申请加入一个房间  //消息体中包含 自身相关信息json格式
 
-    public static final int WAITTING_USER_JOIN_ROOM = 2001;  // 创建房间，等待其他玩家加入 消息体中包含用户自身ID以及所创建的房间的信息
-
-    public static final int EXIT_ROOM = 2002;  // 退出房间  消息体中包含自身用户ID以及退出的房间号
-
-    public static final int DESTROY_ROOM = 2003; // 销毁一个房间  消息体中包含自身用户ID以及销毁的房间号
-
-    public static final int UPDATE_USER_DATA = 2004;  //更新自身数据 消息体中包含自身用户ID以及房间号和游戏数据
-
-    public static final int UPDATE_STATE = 2005;  // 更新房间内自身状态：如准备完成，游戏进行中，掉线等
+    public static final int CREATE_ROOM = 2001;  // 创建房间，等待其他玩家加入 消息体中包含所创建的房间的信息如游戏时长及房间人数设定等json格式
     
-    public static final int ROOM_SUCCESS = 2008;  // 返回给客户端发出的请求 成功消息
+    public static final int EXIT_ROOM = 2002;  // 退出房间 消息体为空即可
+ 
+    public static final int DESTROY_ROOM = 2003; // 销毁一个房间 (只能房主发起，也代表解散当前房间) 消息体可以为空
     
-    public static final int ROOM_FAILURE = 2009;  // 返回给客户端发出的请求失败 重新发送
+    public static final int UPDATE_USER_DATA = 2004;  //更新自身数据 用户当前的状态(用户当前积分等)
+    
+    public static final int UPDATE_GAME_DATA = 2005;  //更新自身数据 用户当前的状态(用户当前最新的游戏数据(指令等))
+    
+    public static final int UPDATE_USER_STATUS = 2006;  // 更新自身状态：如准备完成
+    
+    public static final int GAME_OVER = 2007;  // 适用于客户端主动发起游戏结束的情况   
     
     public static final int ROOM_MAX = 2009;
-
+    
+    //服务端对命令做出响应的命令代码
+    public static final int BROADCAST_JOIN_ROOM = 2101; //向房间内的用户广播某个用户加入房间成功 用扩展字段来代表加入房间的用户ID,消息体中为加入房间用户的具体信息 json格式表示
+  
+    public static final int BROADCAST_CREATE_ROOM = 2102; //通知玩家创建房间成功 消息体为空
+  
+    public static final int BROADCAST_EXIT_ROOM = 2103; //通知房间内所有玩家某个玩家退出房间    
+    
+    public static final int BROADCAST_DESTROY_ROOM = 2104; //通知房间内所有玩家房间解散 消息体可以为空  
+    
+    public static final int BROADCAST_UPDATE_USER_DATA = 2105;  //通知房间内所有玩家某个用户玩家信息更新
+    
+    public static final int BROADCAST_UPDATE_GAME_DATA = 2106;  //通知房间内所有玩家某个用户玩家信息更新  
+    
+    public static final int BROADCAST_UPDATE_USER_STATE = 2107;  //通知房间内所有玩家某个用户玩家信息更新  
+    
+    public static final int BROADCAST_GAME_OVER = 2108;  // 适用于服务端控制游戏结束的情况 
+    
+    public static final int BROADCAST_GAME_START = 2109;  // 适用于服务端控制游戏开始的情况 
+    
+    public static final int REQUEST_FAILURE = 2110;  // 返回给客户端发出的请求失败 请重新发送 用户原始请求的指令会保存到备用字段中    
+    
+    //系统及一些其它的指令
     public static final int SYSTEM_MIN = 9000;
 
     public static final int SYSTEM_GET_INFO = 9000;  // 获取系统配置信息
@@ -47,11 +70,6 @@ public class ProtocolCode {
 
     public static final int SYSTEM_MAX = 9999;
     
-    public static final int PLAYER_OFFLINE = 10000; //用户下线
+    public static final int PLAYER_OFFLINE = 10000; //心跳检测用户下线
     
-    public static final int UNICAST = 10001;//单播 只返回给特定的用户
-    
-    public static final int BROADCAST = 10002;//广播 广播给该房间的内的所有用户
-   
-    public static final int ROOM_DESTROY_BROADCAST = 10003;//广播 广播给该房间的内的所有用户房间解散
 }

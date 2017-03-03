@@ -30,10 +30,10 @@ public class TestSingleTon {
 		for(i=0;i<10000;i++) {
         //准备发送的消息
 		SocketRequest.Builder req = SocketRequest.newBuilder();
-		req.setNumber(ProtocolCode.WAITTING_USER_JOIN_ROOM);
+		req.setNumber(ProtocolCode.CREATE_ROOM);
 		req.setUserId("123456789");
 		req.setRoomId("9999999999");
-		req.setRequestMsg("{\"roomId\":154321321,\"userId\":123456,\"data\":\"sdfdsfsdffffffffffffffffffffffffffffffffffffffffffffffdsfdsvdsfdsfdsfdscvdsfdsfdsfds\",\"roomCreatetime\":1321456421,\"numbers\":3}");
+		req.setRequestMsg("{\"roomId\":154321321,\"userId\":123456,\"gamedata\":\"dsfdsfdsfds\",\"userdata\":\"dsfdsfdsfds\",\"time\":300,\"roomCreatetime\":1321456421,\"numbers\":3}");
 
 		SocketResponse rp = PVPClientSingleton.getSingleton().send(req.build());
 		System.out.println(rp.getResponseMsg()+"        收到的消息 。。。。");
