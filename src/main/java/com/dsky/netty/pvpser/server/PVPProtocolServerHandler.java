@@ -71,19 +71,6 @@ public class PVPProtocolServerHandler extends
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception // 当客户端连上服务器的时候会触发此函数
 	{
-		//System.out.println("client:" + ctx.channel().id() + " join server");
-		//SocketManager.getDefaultStore().add("123", ctx);
-
-		///*
-		SocketRequest.Builder response = SocketRequest.newBuilder();
-		response.setNumber(ProtocolCode.BROADCAST_CREATE_ROOM);
-		response.setRequestMsg("4513212122");// 将对象数组转成json字符串
-		response.setRoomId("1321321");
-		response.setUserId("2321321");
-		//System.out.println("[Server] -- 客户端请求加入房间成功");
-		ctx.writeAndFlush(response.build());
-		//*/
-		//logger.info("clinet:" + ctx.channel().id() + " join server");
 	}
 
 	// 通道断开时做出的响应写这里
@@ -91,7 +78,5 @@ public class PVPProtocolServerHandler extends
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception// 当客户端断开连接的时候触发函数
 	{
 		System.out.println("client:" + ctx.channel().id() + " leave server");
-		//logger.info("client:" + ctx.channel().id() + " leave server");
-		// User.onlineUser.remove(LoginDispatch.getInstance().user);
 	}
 }

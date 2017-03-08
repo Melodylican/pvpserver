@@ -6,7 +6,7 @@
  * @时间：2017年2月24日 下午1:52:01
  * @版本：V1.0   
  */
-package com.dksy.netty.pvpser.test.timer;
+package com.dsky.netty.pvpser.test.timer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

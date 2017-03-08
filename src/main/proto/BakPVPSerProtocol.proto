@@ -7,7 +7,8 @@ message SocketRequest {
   optional string roomId = 3;#房间号
   optional int32 sequence = 4;#序列号
   optional string reserve = 5;#备用字段
-  optional string requestMsg = 6;#包含具体信息的json字符串
+  optional string gateway = 6;#备用字段 用于gateway透传
+  optional string requestMsg = 7;#包含具体信息的json字符串
 }
 
 message SocketResponse {
@@ -16,5 +17,6 @@ message SocketResponse {
   optional string roomId = 3;#房间号
   optional int32 sequence = 4;#序列号
   optional string reserve = 5;#备用字段
-  optional string responseMsg = 6;#数据信息json
+  optional string gateway = 6;#备用字段 用于gateway透传
+  optional string responseMsg = 7;#数据信息json
 }

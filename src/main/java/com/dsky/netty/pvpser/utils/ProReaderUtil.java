@@ -19,9 +19,12 @@ public class ProReaderUtil {
     private static ProReaderUtil instance = new ProReaderUtil();
 
     /**
-     * 配置文件路径
+     * 配置文件路径  根据具体的部署路径放到具体的配置文件位置即可 //TODO 注意修改这里
      */
-    private String confPath = "confFiles";
+    //本地
+    private String confPath = "E://aJax//confFiles";
+    //测试
+    //private String confPath = "/home/roger.wang/chris/confFiles";
 
     /**
      * redis配置缓存

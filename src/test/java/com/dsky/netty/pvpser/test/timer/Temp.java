@@ -6,7 +6,7 @@
  * @时间：2017年2月24日 上午10:29:25
  * @版本：V1.0   
  */
-package com.dksy.netty.pvpser.test.timer;
+package com.dsky.netty.pvpser.test.timer;
 
 import java.io.IOException;
 import java.time.LocalTime;

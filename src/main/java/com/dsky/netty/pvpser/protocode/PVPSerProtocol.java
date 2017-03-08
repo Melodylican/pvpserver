@@ -42,15 +42,15 @@ public final class PVPSerProtocol {
         getUserIdBytes();
 
     /**
-     * <code>required string roomId = 3;</code>
+     * <code>optional string roomId = 3;</code>
      */
     boolean hasRoomId();
     /**
-     * <code>required string roomId = 3;</code>
+     * <code>optional string roomId = 3;</code>
      */
     java.lang.String getRoomId();
     /**
-     * <code>required string roomId = 3;</code>
+     * <code>optional string roomId = 3;</code>
      */
     com.google.protobuf.ByteString
         getRoomIdBytes();
@@ -79,15 +79,29 @@ public final class PVPSerProtocol {
         getReserveBytes();
 
     /**
-     * <code>optional string requestMsg = 6;</code>
+     * <code>optional string gateway = 6;</code>
+     */
+    boolean hasGateway();
+    /**
+     * <code>optional string gateway = 6;</code>
+     */
+    java.lang.String getGateway();
+    /**
+     * <code>optional string gateway = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getGatewayBytes();
+
+    /**
+     * <code>optional string requestMsg = 7;</code>
      */
     boolean hasRequestMsg();
     /**
-     * <code>optional string requestMsg = 6;</code>
+     * <code>optional string requestMsg = 7;</code>
      */
     java.lang.String getRequestMsg();
     /**
-     * <code>optional string requestMsg = 6;</code>
+     * <code>optional string requestMsg = 7;</code>
      */
     com.google.protobuf.ByteString
         getRequestMsgBytes();
@@ -109,6 +123,7 @@ public final class PVPSerProtocol {
       roomId_ = "";
       sequence_ = 0;
       reserve_ = "";
+      gateway_ = "";
       requestMsg_ = "";
     }
 
@@ -171,6 +186,12 @@ public final class PVPSerProtocol {
             case 50: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000020;
+              gateway_ = bs;
+              break;
+            }
+            case 58: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000040;
               requestMsg_ = bs;
               break;
             }
@@ -259,13 +280,13 @@ public final class PVPSerProtocol {
     public static final int ROOMID_FIELD_NUMBER = 3;
     private volatile java.lang.Object roomId_;
     /**
-     * <code>required string roomId = 3;</code>
+     * <code>optional string roomId = 3;</code>
      */
     public boolean hasRoomId() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required string roomId = 3;</code>
+     * <code>optional string roomId = 3;</code>
      */
     public java.lang.String getRoomId() {
       java.lang.Object ref = roomId_;
@@ -282,7 +303,7 @@ public final class PVPSerProtocol {
       }
     }
     /**
-     * <code>required string roomId = 3;</code>
+     * <code>optional string roomId = 3;</code>
      */
     public com.google.protobuf.ByteString
         getRoomIdBytes() {
@@ -355,16 +376,58 @@ public final class PVPSerProtocol {
       }
     }
 
-    public static final int REQUESTMSG_FIELD_NUMBER = 6;
-    private volatile java.lang.Object requestMsg_;
+    public static final int GATEWAY_FIELD_NUMBER = 6;
+    private volatile java.lang.Object gateway_;
     /**
-     * <code>optional string requestMsg = 6;</code>
+     * <code>optional string gateway = 6;</code>
      */
-    public boolean hasRequestMsg() {
+    public boolean hasGateway() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional string requestMsg = 6;</code>
+     * <code>optional string gateway = 6;</code>
+     */
+    public java.lang.String getGateway() {
+      java.lang.Object ref = gateway_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          gateway_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string gateway = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getGatewayBytes() {
+      java.lang.Object ref = gateway_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        gateway_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int REQUESTMSG_FIELD_NUMBER = 7;
+    private volatile java.lang.Object requestMsg_;
+    /**
+     * <code>optional string requestMsg = 7;</code>
+     */
+    public boolean hasRequestMsg() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>optional string requestMsg = 7;</code>
      */
     public java.lang.String getRequestMsg() {
       java.lang.Object ref = requestMsg_;
@@ -381,7 +444,7 @@ public final class PVPSerProtocol {
       }
     }
     /**
-     * <code>optional string requestMsg = 6;</code>
+     * <code>optional string requestMsg = 7;</code>
      */
     public com.google.protobuf.ByteString
         getRequestMsgBytes() {
@@ -411,10 +474,6 @@ public final class PVPSerProtocol {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasRoomId()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -437,7 +496,10 @@ public final class PVPSerProtocol {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, reserve_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, requestMsg_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, gateway_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, requestMsg_);
       }
       unknownFields.writeTo(output);
     }
@@ -465,7 +527,10 @@ public final class PVPSerProtocol {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, reserve_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, requestMsg_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, gateway_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, requestMsg_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -509,6 +574,11 @@ public final class PVPSerProtocol {
         result = result && getReserve()
             .equals(other.getReserve());
       }
+      result = result && (hasGateway() == other.hasGateway());
+      if (hasGateway()) {
+        result = result && getGateway()
+            .equals(other.getGateway());
+      }
       result = result && (hasRequestMsg() == other.hasRequestMsg());
       if (hasRequestMsg()) {
         result = result && getRequestMsg()
@@ -544,6 +614,10 @@ public final class PVPSerProtocol {
       if (hasReserve()) {
         hash = (37 * hash) + RESERVE_FIELD_NUMBER;
         hash = (53 * hash) + getReserve().hashCode();
+      }
+      if (hasGateway()) {
+        hash = (37 * hash) + GATEWAY_FIELD_NUMBER;
+        hash = (53 * hash) + getGateway().hashCode();
       }
       if (hasRequestMsg()) {
         hash = (37 * hash) + REQUESTMSG_FIELD_NUMBER;
@@ -677,8 +751,10 @@ public final class PVPSerProtocol {
         bitField0_ = (bitField0_ & ~0x00000008);
         reserve_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
-        requestMsg_ = "";
+        gateway_ = "";
         bitField0_ = (bitField0_ & ~0x00000020);
+        requestMsg_ = "";
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -725,6 +801,10 @@ public final class PVPSerProtocol {
         result.reserve_ = reserve_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
+        }
+        result.gateway_ = gateway_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
         }
         result.requestMsg_ = requestMsg_;
         result.bitField0_ = to_bitField0_;
@@ -790,8 +870,13 @@ public final class PVPSerProtocol {
           reserve_ = other.reserve_;
           onChanged();
         }
-        if (other.hasRequestMsg()) {
+        if (other.hasGateway()) {
           bitField0_ |= 0x00000020;
+          gateway_ = other.gateway_;
+          onChanged();
+        }
+        if (other.hasRequestMsg()) {
+          bitField0_ |= 0x00000040;
           requestMsg_ = other.requestMsg_;
           onChanged();
         }
@@ -805,9 +890,6 @@ public final class PVPSerProtocol {
           return false;
         }
         if (!hasUserId()) {
-          return false;
-        }
-        if (!hasRoomId()) {
           return false;
         }
         return true;
@@ -942,13 +1024,13 @@ public final class PVPSerProtocol {
 
       private java.lang.Object roomId_ = "";
       /**
-       * <code>required string roomId = 3;</code>
+       * <code>optional string roomId = 3;</code>
        */
       public boolean hasRoomId() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required string roomId = 3;</code>
+       * <code>optional string roomId = 3;</code>
        */
       public java.lang.String getRoomId() {
         java.lang.Object ref = roomId_;
@@ -965,7 +1047,7 @@ public final class PVPSerProtocol {
         }
       }
       /**
-       * <code>required string roomId = 3;</code>
+       * <code>optional string roomId = 3;</code>
        */
       public com.google.protobuf.ByteString
           getRoomIdBytes() {
@@ -981,7 +1063,7 @@ public final class PVPSerProtocol {
         }
       }
       /**
-       * <code>required string roomId = 3;</code>
+       * <code>optional string roomId = 3;</code>
        */
       public Builder setRoomId(
           java.lang.String value) {
@@ -994,7 +1076,7 @@ public final class PVPSerProtocol {
         return this;
       }
       /**
-       * <code>required string roomId = 3;</code>
+       * <code>optional string roomId = 3;</code>
        */
       public Builder clearRoomId() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -1003,7 +1085,7 @@ public final class PVPSerProtocol {
         return this;
       }
       /**
-       * <code>required string roomId = 3;</code>
+       * <code>optional string roomId = 3;</code>
        */
       public Builder setRoomIdBytes(
           com.google.protobuf.ByteString value) {
@@ -1124,15 +1206,91 @@ public final class PVPSerProtocol {
         return this;
       }
 
-      private java.lang.Object requestMsg_ = "";
+      private java.lang.Object gateway_ = "";
       /**
-       * <code>optional string requestMsg = 6;</code>
+       * <code>optional string gateway = 6;</code>
        */
-      public boolean hasRequestMsg() {
+      public boolean hasGateway() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional string requestMsg = 6;</code>
+       * <code>optional string gateway = 6;</code>
+       */
+      public java.lang.String getGateway() {
+        java.lang.Object ref = gateway_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            gateway_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getGatewayBytes() {
+        java.lang.Object ref = gateway_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          gateway_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public Builder setGateway(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        gateway_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public Builder clearGateway() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        gateway_ = getDefaultInstance().getGateway();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public Builder setGatewayBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        gateway_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object requestMsg_ = "";
+      /**
+       * <code>optional string requestMsg = 7;</code>
+       */
+      public boolean hasRequestMsg() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional string requestMsg = 7;</code>
        */
       public java.lang.String getRequestMsg() {
         java.lang.Object ref = requestMsg_;
@@ -1149,7 +1307,7 @@ public final class PVPSerProtocol {
         }
       }
       /**
-       * <code>optional string requestMsg = 6;</code>
+       * <code>optional string requestMsg = 7;</code>
        */
       public com.google.protobuf.ByteString
           getRequestMsgBytes() {
@@ -1165,36 +1323,36 @@ public final class PVPSerProtocol {
         }
       }
       /**
-       * <code>optional string requestMsg = 6;</code>
+       * <code>optional string requestMsg = 7;</code>
        */
       public Builder setRequestMsg(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000040;
         requestMsg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string requestMsg = 6;</code>
+       * <code>optional string requestMsg = 7;</code>
        */
       public Builder clearRequestMsg() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         requestMsg_ = getDefaultInstance().getRequestMsg();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string requestMsg = 6;</code>
+       * <code>optional string requestMsg = 7;</code>
        */
       public Builder setRequestMsgBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000040;
         requestMsg_ = value;
         onChanged();
         return this;
@@ -1313,15 +1471,29 @@ public final class PVPSerProtocol {
         getReserveBytes();
 
     /**
-     * <code>optional string responseMsg = 6;</code>
+     * <code>optional string gateway = 6;</code>
+     */
+    boolean hasGateway();
+    /**
+     * <code>optional string gateway = 6;</code>
+     */
+    java.lang.String getGateway();
+    /**
+     * <code>optional string gateway = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getGatewayBytes();
+
+    /**
+     * <code>optional string responseMsg = 7;</code>
      */
     boolean hasResponseMsg();
     /**
-     * <code>optional string responseMsg = 6;</code>
+     * <code>optional string responseMsg = 7;</code>
      */
     java.lang.String getResponseMsg();
     /**
-     * <code>optional string responseMsg = 6;</code>
+     * <code>optional string responseMsg = 7;</code>
      */
     com.google.protobuf.ByteString
         getResponseMsgBytes();
@@ -1343,6 +1515,7 @@ public final class PVPSerProtocol {
       roomId_ = "";
       sequence_ = 0;
       reserve_ = "";
+      gateway_ = "";
       responseMsg_ = "";
     }
 
@@ -1405,6 +1578,12 @@ public final class PVPSerProtocol {
             case 50: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000020;
+              gateway_ = bs;
+              break;
+            }
+            case 58: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000040;
               responseMsg_ = bs;
               break;
             }
@@ -1589,16 +1768,58 @@ public final class PVPSerProtocol {
       }
     }
 
-    public static final int RESPONSEMSG_FIELD_NUMBER = 6;
-    private volatile java.lang.Object responseMsg_;
+    public static final int GATEWAY_FIELD_NUMBER = 6;
+    private volatile java.lang.Object gateway_;
     /**
-     * <code>optional string responseMsg = 6;</code>
+     * <code>optional string gateway = 6;</code>
      */
-    public boolean hasResponseMsg() {
+    public boolean hasGateway() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional string responseMsg = 6;</code>
+     * <code>optional string gateway = 6;</code>
+     */
+    public java.lang.String getGateway() {
+      java.lang.Object ref = gateway_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          gateway_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string gateway = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getGatewayBytes() {
+      java.lang.Object ref = gateway_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        gateway_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSEMSG_FIELD_NUMBER = 7;
+    private volatile java.lang.Object responseMsg_;
+    /**
+     * <code>optional string responseMsg = 7;</code>
+     */
+    public boolean hasResponseMsg() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>optional string responseMsg = 7;</code>
      */
     public java.lang.String getResponseMsg() {
       java.lang.Object ref = responseMsg_;
@@ -1615,7 +1836,7 @@ public final class PVPSerProtocol {
       }
     }
     /**
-     * <code>optional string responseMsg = 6;</code>
+     * <code>optional string responseMsg = 7;</code>
      */
     public com.google.protobuf.ByteString
         getResponseMsgBytes() {
@@ -1663,7 +1884,10 @@ public final class PVPSerProtocol {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, reserve_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, responseMsg_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, gateway_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, responseMsg_);
       }
       unknownFields.writeTo(output);
     }
@@ -1691,7 +1915,10 @@ public final class PVPSerProtocol {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, reserve_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, responseMsg_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, gateway_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, responseMsg_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1735,6 +1962,11 @@ public final class PVPSerProtocol {
         result = result && getReserve()
             .equals(other.getReserve());
       }
+      result = result && (hasGateway() == other.hasGateway());
+      if (hasGateway()) {
+        result = result && getGateway()
+            .equals(other.getGateway());
+      }
       result = result && (hasResponseMsg() == other.hasResponseMsg());
       if (hasResponseMsg()) {
         result = result && getResponseMsg()
@@ -1770,6 +2002,10 @@ public final class PVPSerProtocol {
       if (hasReserve()) {
         hash = (37 * hash) + RESERVE_FIELD_NUMBER;
         hash = (53 * hash) + getReserve().hashCode();
+      }
+      if (hasGateway()) {
+        hash = (37 * hash) + GATEWAY_FIELD_NUMBER;
+        hash = (53 * hash) + getGateway().hashCode();
       }
       if (hasResponseMsg()) {
         hash = (37 * hash) + RESPONSEMSG_FIELD_NUMBER;
@@ -1903,8 +2139,10 @@ public final class PVPSerProtocol {
         bitField0_ = (bitField0_ & ~0x00000008);
         reserve_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
-        responseMsg_ = "";
+        gateway_ = "";
         bitField0_ = (bitField0_ & ~0x00000020);
+        responseMsg_ = "";
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -1951,6 +2189,10 @@ public final class PVPSerProtocol {
         result.reserve_ = reserve_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
+        }
+        result.gateway_ = gateway_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
         }
         result.responseMsg_ = responseMsg_;
         result.bitField0_ = to_bitField0_;
@@ -2016,8 +2258,13 @@ public final class PVPSerProtocol {
           reserve_ = other.reserve_;
           onChanged();
         }
-        if (other.hasResponseMsg()) {
+        if (other.hasGateway()) {
           bitField0_ |= 0x00000020;
+          gateway_ = other.gateway_;
+          onChanged();
+        }
+        if (other.hasResponseMsg()) {
+          bitField0_ |= 0x00000040;
           responseMsg_ = other.responseMsg_;
           onChanged();
         }
@@ -2344,15 +2591,91 @@ public final class PVPSerProtocol {
         return this;
       }
 
-      private java.lang.Object responseMsg_ = "";
+      private java.lang.Object gateway_ = "";
       /**
-       * <code>optional string responseMsg = 6;</code>
+       * <code>optional string gateway = 6;</code>
        */
-      public boolean hasResponseMsg() {
+      public boolean hasGateway() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional string responseMsg = 6;</code>
+       * <code>optional string gateway = 6;</code>
+       */
+      public java.lang.String getGateway() {
+        java.lang.Object ref = gateway_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            gateway_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getGatewayBytes() {
+        java.lang.Object ref = gateway_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          gateway_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public Builder setGateway(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        gateway_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public Builder clearGateway() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        gateway_ = getDefaultInstance().getGateway();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string gateway = 6;</code>
+       */
+      public Builder setGatewayBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        gateway_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object responseMsg_ = "";
+      /**
+       * <code>optional string responseMsg = 7;</code>
+       */
+      public boolean hasResponseMsg() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional string responseMsg = 7;</code>
        */
       public java.lang.String getResponseMsg() {
         java.lang.Object ref = responseMsg_;
@@ -2369,7 +2692,7 @@ public final class PVPSerProtocol {
         }
       }
       /**
-       * <code>optional string responseMsg = 6;</code>
+       * <code>optional string responseMsg = 7;</code>
        */
       public com.google.protobuf.ByteString
           getResponseMsgBytes() {
@@ -2385,36 +2708,36 @@ public final class PVPSerProtocol {
         }
       }
       /**
-       * <code>optional string responseMsg = 6;</code>
+       * <code>optional string responseMsg = 7;</code>
        */
       public Builder setResponseMsg(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000040;
         responseMsg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string responseMsg = 6;</code>
+       * <code>optional string responseMsg = 7;</code>
        */
       public Builder clearResponseMsg() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         responseMsg_ = getDefaultInstance().getResponseMsg();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string responseMsg = 6;</code>
+       * <code>optional string responseMsg = 7;</code>
        */
       public Builder setResponseMsgBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000040;
         responseMsg_ = value;
         onChanged();
         return this;
@@ -2487,15 +2810,15 @@ public final class PVPSerProtocol {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\032proto/PVPSerProtocol.proto\"v\n\rSocketRe" +
-      "quest\022\016\n\006number\030\001 \002(\005\022\016\n\006userId\030\002 \002(\t\022\016\n" +
-      "\006roomId\030\003 \002(\t\022\020\n\010sequence\030\004 \001(\005\022\017\n\007reser" +
-      "ve\030\005 \001(\t\022\022\n\nrequestMsg\030\006 \001(\t\"x\n\016SocketRe" +
-      "sponse\022\016\n\006number\030\001 \002(\005\022\016\n\006userId\030\002 \001(\t\022\016" +
+      "\n\032proto/PVPSerProtocol.proto\"\207\001\n\rSocketR" +
+      "equest\022\016\n\006number\030\001 \002(\005\022\016\n\006userId\030\002 \002(\t\022\016" +
       "\n\006roomId\030\003 \001(\t\022\020\n\010sequence\030\004 \001(\005\022\017\n\007rese" +
-      "rve\030\005 \001(\t\022\023\n\013responseMsg\030\006 \001(\tB1\n\037com.ds" +
-      "ky.netty.pvpser.protocodeB\016PVPSerProtoco" +
-      "l"
+      "rve\030\005 \001(\t\022\017\n\007gateway\030\006 \001(\t\022\022\n\nrequestMsg" +
+      "\030\007 \001(\t\"\211\001\n\016SocketResponse\022\016\n\006number\030\001 \002(" +
+      "\005\022\016\n\006userId\030\002 \001(\t\022\016\n\006roomId\030\003 \001(\t\022\020\n\010seq" +
+      "uence\030\004 \001(\005\022\017\n\007reserve\030\005 \001(\t\022\017\n\007gateway\030" +
+      "\006 \001(\t\022\023\n\013responseMsg\030\007 \001(\tB1\n\037com.dsky.n" +
+      "etty.pvpser.protocodeB\016PVPSerProtocol"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2514,13 +2837,13 @@ public final class PVPSerProtocol {
     internal_static_SocketRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SocketRequest_descriptor,
-        new java.lang.String[] { "Number", "UserId", "RoomId", "Sequence", "Reserve", "RequestMsg", });
+        new java.lang.String[] { "Number", "UserId", "RoomId", "Sequence", "Reserve", "Gateway", "RequestMsg", });
     internal_static_SocketResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_SocketResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SocketResponse_descriptor,
-        new java.lang.String[] { "Number", "UserId", "RoomId", "Sequence", "Reserve", "ResponseMsg", });
+        new java.lang.String[] { "Number", "UserId", "RoomId", "Sequence", "Reserve", "Gateway", "ResponseMsg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

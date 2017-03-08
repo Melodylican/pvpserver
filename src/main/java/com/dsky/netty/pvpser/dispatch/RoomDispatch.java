@@ -23,14 +23,14 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import com.dsky.netty.pvpser.common.Keys;
+
 import com.dsky.netty.pvpser.common.ProtocolCode;
 import com.dsky.netty.pvpser.model.Room;
 import com.dsky.netty.pvpser.model.User;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketRequest;
 import com.dsky.netty.pvpser.protocode.PVPSerProtocol.SocketResponse;
 import com.dsky.netty.pvpser.redis.RoomRedis;
+import com.dsky.netty.pvpser.store.HeartbeatStore;
 
 /**
  * @类功能说明：处理与房间相关的请求
@@ -72,13 +72,12 @@ public class RoomDispatch {
 			logger.debug("Protocol UPDATE_USER_DATA message: " + request);
 			updateUserData(ctx, request);
 		} else if (request.getNumber() == ProtocolCode.UPDATE_GAME_DATA) {
-			logger.debug("Protocol UPDATE_USER_DATA message: " + request);
+			logger.debug("Protocol UPDATE_GAME_DATA message: " + request);
 			updateGameData(ctx, request);
 		} else if (request.getNumber() == ProtocolCode.UPDATE_USER_STATUS) {
 			logger.debug("Protocol UPDATE_USER_DATA message: " + request);
 			updateUserStatus(ctx, request);
 		} else {
-			
 			SocketResponse.Builder response = SocketResponse.newBuilder();
 			response.setNumber(ProtocolCode.REQUEST_FAILURE);
 			response.setResponseMsg("{\"msg\":\"unknown protocol code: "+request.getNumber()+"}");
@@ -86,10 +85,12 @@ public class RoomDispatch {
 			response.setUserId(request.getUserId());
 			response.setRoomId(request.getRoomId());
 			response.setReserve(request.getNumber()+"");
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			//System.out.println("[Server] -- 客户端请求加入房间失败： [ "+ request.toString() + " ]");
 			ctx.writeAndFlush(response);
 			
-			logger.error("unknown protocol code: " + request.getNumber()
+			logger.warn("unknown protocol code: " + request.getNumber()
 					+ ", message: " + request);
 			return;
 		}
@@ -129,6 +130,8 @@ public class RoomDispatch {
 			response.setUserId(userId);
 			response.setRoomId(roomId);
 			response.setReserve(request.getNumber()+"");
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			//System.out.println("[Server] -- 客户端请求加入房间失败： [ "+ request.toString() + " ]");
 			ctx.writeAndFlush(response);
 			return;
@@ -154,6 +157,12 @@ public class RoomDispatch {
 					.toArray()));// 将对象数组转成json字符串
 			response.setRoomId(room.getRoomId());
 			response.setUserId(userId);
+			//用于测试时间
+			if(request.getReserve() != null) {
+				response.setReserve(request.getReserve());
+			}
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			ctx.writeAndFlush(response);
 		}
 	}
@@ -181,6 +190,16 @@ public class RoomDispatch {
 
 		try {
 			jsonObj = com.alibaba.fastjson.JSON.parseObject(jsonMsg);
+			
+			if(jsonObj == null) {
+				response = SocketResponse.newBuilder();
+				response.setNumber(ProtocolCode.REQUEST_FAILURE);
+				response.setResponseMsg("Incorrect parameter type ！\n");
+				response.setRoomId(roomId);
+				response.setUserId(userId);
+				response.setReserve(request.getNumber()+"");
+				return;
+			}
 			if (roomId != null && userId != null && jsonObj.containsKey("time")
 					&& jsonObj.containsKey("roomCreatetime")
 					&& jsonObj.containsKey("numbers")
@@ -204,8 +223,8 @@ public class RoomDispatch {
 					Map<String, User> map = new HashMap<String, User>();
 					map.put(userId, user);
 					room.setMember(map);
-					room.setRoomStatus(1);// 设置房间处于等待状态 //TODO 房间状态需要具体考虑
-											// 到底房间应该设定为哪些状态
+					room.setRoomStatus(0);// 设置房间处于等待状态 //TODO 房间状态需要具体考虑
+											// [0 匹配中 , 1 匹配成功状态 , 2 等待开始状态 , 3 游戏中 , 4 游戏结束 , 5 房间解散状态 ]
 					// 将房间信息存入Redis中
 					RoomRedis.getInstance().add(roomId, room); // 保存到Redis中
 				} catch (NumberFormatException e) {
@@ -219,6 +238,8 @@ public class RoomDispatch {
 					response.setRoomId(roomId);
 					response.setUserId(userId);
 					response.setReserve(request.getNumber()+"");
+					if(request.getGateway() != null )
+						response.setGateway(request.getGateway());
 					//System.out.println("[Server] -- 客户端请求加入房间失败： ["+ e.getMessage() + "\n ]");
 					ctx.writeAndFlush(response);
 				}
@@ -232,6 +253,11 @@ public class RoomDispatch {
 			response.setRoomId(roomId);
 			response.setUserId(userId);
 			response.setReserve(request.getNumber()+"");
+			//用于测试时间
+			if(request.getReserve() != null)
+				response.setReserve(request.getReserve());
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			//System.out.println("[Server] -- 客户端请求加入房间失败： [" + jsonMsg + "\n"+ e.getMessage() + "\n ]");
 			ctx.writeAndFlush(response);
 			return;
@@ -241,6 +267,11 @@ public class RoomDispatch {
 		response.setResponseMsg("{\"msg\":\"Congratulations ! Room created successfully, waiting for players to join \"}");
 		response.setRoomId(roomId); // TODO
 		response.setUserId(userId);
+		//用于测试时间延迟
+		if(request.getReserve() != null)
+			response.setReserve(request.getReserve());
+		if(request.getGateway() != null )
+			response.setGateway(request.getGateway());
 		ctx.writeAndFlush(response);
 
 		/*
@@ -295,6 +326,8 @@ public class RoomDispatch {
 							.values().toArray()));// 将对象数组转成json字符串
 					response.setRoomId(room.getRoomId());
 					response.setUserId(userId);
+					if(request.getGateway() != null )
+						response.setGateway(request.getGateway());
 					//System.out.println("[Server] -- 客户端请求离开房间成功");
 					ctx.writeAndFlush(response);
 				}
@@ -310,6 +343,8 @@ public class RoomDispatch {
 			response.setRoomId(roomId); // TODO
 			response.setUserId(userId);
 			response.setReserve(request.getNumber()+"");
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			//System.out.println("[Server] -- 客户端请求退出房间失败： [ " + e.getMessage()+ " ]");
 			ctx.writeAndFlush(response);
 			return;
@@ -350,6 +385,8 @@ public class RoomDispatch {
 	    	            	response.setResponseMsg(com.alibaba.fastjson.JSON.toJSONString(room));//将房间的状态返回给各个客户端
 	    	            	response.setRoomId(roomId); //TODO
 	    	            	response.setUserId(userId);
+	    	    			if(request.getGateway() != null )
+	    	    				response.setGateway(request.getGateway());
 	    	            	//System.out.println("[Server] -- 客户端请求销毁房间成功");
 	    	            	ctx.writeAndFlush(response);
 	    	            	return ;
@@ -360,6 +397,8 @@ public class RoomDispatch {
 	    	            	response.setRoomId(roomId); //TODO
 	    	            	response.setUserId(userId);
 	    	            	response.setReserve(request.getNumber()+"");
+	    	    			if(request.getGateway() != null )
+	    	    				response.setGateway(request.getGateway());
 	    	            	ctx.writeAndFlush(response);
 	    	            	return ;
 	    	        	}
@@ -373,6 +412,8 @@ public class RoomDispatch {
 	        	response.setRoomId(roomId); //TODO
 	        	response.setUserId(userId);
 	        	response.setReserve(request.getNumber()+"");
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 	        	ctx.writeAndFlush(response);
 	        	return ;
 	        }
@@ -410,6 +451,8 @@ public class RoomDispatch {
 			response.setRoomId(roomId); // TODO
 			response.setUserId(userId);
 			response.setReserve(request.getNumber()+"");
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			ctx.writeAndFlush(response);
 			return;
 		}
@@ -437,6 +480,8 @@ public class RoomDispatch {
 						.values().toArray()));// 将对象数组转成json字符串
 				response.setRoomId(room.getRoomId());
 				response.setUserId(userId);
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 				ctx.writeAndFlush(response);
 			} else {
 				response = SocketResponse.newBuilder();
@@ -446,6 +491,8 @@ public class RoomDispatch {
 				response.setRoomId(roomId); // TODO
 				response.setUserId(userId);
 				response.setReserve(request.getNumber()+"");
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 				ctx.writeAndFlush(response);
 				return;
 			}
@@ -467,6 +514,7 @@ public class RoomDispatch {
 		String jsonMsg = String.valueOf(request.getRequestMsg());
 		JSONObject jsonObj = null;
 		String roomId = request.getRoomId();
+		//System.out.println("roomId  :  "+roomId);
 		String userId = request.getUserId();
 		String gamedata = "";
 
@@ -475,6 +523,7 @@ public class RoomDispatch {
 			if (roomId != null  && userId != null
 					&& jsonObj.containsKey("gamedata")) {
 				gamedata = jsonObj.getString("gamedata");
+				//System.out.println("[Server] -- gamedata : "+gamedata);
 			} else
 				throw new JSONException("parameter not complete \n" + jsonMsg);
 		} catch (JSONException e) {
@@ -482,9 +531,11 @@ public class RoomDispatch {
 			response.setNumber(ProtocolCode.REQUEST_FAILURE);
 			response.setResponseMsg("data format error not a json style！\n"
 					+ jsonMsg + "\n" + e.getMessage());
-			response.setRoomId(roomId); // TODO
+			response.setRoomId(roomId);
 			response.setUserId(userId);
 			response.setReserve(request.getNumber()+"");
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			ctx.writeAndFlush(response);
 			return;
 		}
@@ -506,11 +557,13 @@ public class RoomDispatch {
 
 				// TODO 返回整个房间的玩家的所有信息
 				response = SocketResponse.newBuilder();
-				response.setNumber(ProtocolCode.BROADCAST_UPDATE_USER_DATA);
+				response.setNumber(ProtocolCode.BROADCAST_UPDATE_GAME_DATA);
 				response.setResponseMsg(JSON.toJSONString(map
 						.values().toArray()));// 将对象数组转成json字符串
 				response.setRoomId(room.getRoomId());
 				response.setUserId(userId);
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 				ctx.writeAndFlush(response);
 			} else {
 				response = SocketResponse.newBuilder();
@@ -520,6 +573,8 @@ public class RoomDispatch {
 				response.setRoomId(roomId); // TODO
 				response.setUserId(userId);
 				response.setReserve(request.getNumber()+"");
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 				ctx.writeAndFlush(response);
 				return;
 			}
@@ -558,6 +613,8 @@ public class RoomDispatch {
 			response.setRoomId(roomId); // TODO
 			response.setUserId(userId);
 			response.setReserve(request.getNumber()+"");
+			if(request.getGateway() != null )
+				response.setGateway(request.getGateway());
 			ctx.writeAndFlush(response);
 			return;
 		}
@@ -583,9 +640,33 @@ public class RoomDispatch {
 						.values().toArray()));// 将对象数组转成json字符串
 				response.setRoomId(room.getRoomId());
 				response.setUserId(userId);
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 				ctx.writeAndFlush(response);
 				
 				//TODO 接下来判断整个房间内的玩家是否都准备完成 如果都准备完成 则向所有玩家发送开始倒计时或者开始游戏命令
+				//如果当前房间内人数已满 则开始判断是否所有玩家都准备完成
+				if(room.getCurrentNumber() == room.getNumbers()) {
+					for(User u:map.values()) {
+						if(u.getUserStatus() != 1)
+							return;
+					}
+					//所有玩家准备完成则发送开始命令并且启动游戏结束定时器
+					//发送游戏开始
+					
+	            	SocketResponse.Builder startGame = SocketResponse.newBuilder();
+	                response.setNumber(ProtocolCode.BROADCAST_GAME_START);
+	                response.setRoomId(request.getRoomId());
+	                response.setResponseMsg("Game Start!"); //测试
+	                if(request.getGateway() != null )
+	                	response.setGateway(request.getGateway());
+	                ctx.writeAndFlush(response);
+					
+					//启动游戏结束定时器
+					gameOverTimer(ctx,request,room.getTime());
+				}
+				
+				
 			} else {
 				response = SocketResponse.newBuilder();
 				response.setNumber(ProtocolCode.REQUEST_FAILURE);
@@ -594,11 +675,47 @@ public class RoomDispatch {
 				response.setRoomId(roomId);
 				response.setUserId(userId);
 				response.setReserve(request.getNumber()+"");
+				if(request.getGateway() != null )
+					response.setGateway(request.getGateway());
 				ctx.writeAndFlush(response);
 				return;
 			}
 		}
 	}
+	
+	
+	
+    /**
+     * 心跳超时定时器
+     *
+     * @param sourceID 用户ID
+     * @param roomID 房间ID
+     */
+    private static void gameOverTimer(final ChannelHandlerContext ctx, final SocketRequest request, int timelimit){
+//    	/*
+        Timer timer = new HashedWheelTimer();
+        timer.newTimeout(new TimerTask() {
+            public void run(Timeout timeout) throws Exception {
+            	
+            	//通知房间内其他玩家 游戏结束了
+            	SocketResponse.Builder response = SocketResponse.newBuilder();
+                response.setNumber(ProtocolCode.BROADCAST_GAME_OVER);
+                response.setRoomId(request.getRoomId());
+                response.setResponseMsg("Game Over!"); //测试
+                if(request.getGateway() != null )
+                	response.setGateway(request.getGateway());
+                //通知房间内的其他玩家 该玩家已掉线
+                ctx.writeAndFlush(response);
+                //向所有玩家发送游戏结束命令后 需要清空redis中该房间的数据 
+                //TODO
+                
+            }
+        }, timelimit, TimeUnit.SECONDS);
+
+       HeartbeatStore.add(request.getRoomId() , timer);//保存当前定时器 用于处理游戏还未结束但所有玩家已经退出房间的情况
+//        */
+    }	
+	
 	/**
 	 * 向房间内的玩家发送开始游戏指令
 	 * 

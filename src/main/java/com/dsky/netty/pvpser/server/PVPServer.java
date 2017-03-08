@@ -88,7 +88,7 @@ public class PVPServer {
 //           SocketManager.schedule(new AttackTimer(), Config.ATTACK_TIMEOVER);
 //           logger.info("Scheduled AttackTimer ...");	         
 	      
-	        // Bind to port 
+	        // Bind to port
 	        bootStrap.bind(PORT).sync().channel().closeFuture().sync();
 	    } finally {
 	    	serverGroup.shutdownGracefully();

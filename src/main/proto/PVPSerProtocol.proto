@@ -4,10 +4,11 @@ option java_outer_classname = "PVPSerProtocol";
 message SocketRequest {
   required int32 number = 1;
   required string userId = 2;
-  required string roomId = 3;
+  optional string roomId = 3;
   optional int32 sequence = 4;
   optional string reserve = 5;
-  optional string requestMsg = 6;
+  optional string gateway = 6;
+  optional string requestMsg = 7;
 }
 
 message SocketResponse {
@@ -16,5 +17,6 @@ message SocketResponse {
   optional string roomId = 3;
   optional int32 sequence = 4;
   optional string reserve = 5;
-  optional string responseMsg = 6;
+  optional string gateway = 6;
+  optional string responseMsg = 7;
 }

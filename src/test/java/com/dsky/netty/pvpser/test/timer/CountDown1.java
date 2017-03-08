@@ -6,7 +6,7 @@
  * @时间：2017年3月1日 下午2:27:15
  * @版本：V1.0   
  */
-package com.dksy.netty.pvpser.test.timer;
+package com.dsky.netty.pvpser.test.timer;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
